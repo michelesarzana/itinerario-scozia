@@ -240,8 +240,14 @@ footer strong { color: var(--gold); }
   .attraction-card { border: 1px solid #ccc; }
 }
 
-.attr-link { color: var(--blue); font-size:0.8rem; display:block; margin-top:6px; text-decoration:none; }
-.attr-link:hover { text-decoration: underline; }
+.attr-link {
+  display: inline-block; margin-top: 8px;
+  background: rgba(78,160,230,0.15); border: 1px solid rgba(78,160,230,0.4);
+  color: var(--blue); font-size: 0.72rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px; text-decoration: none;
+  transition: background 0.15s;
+}
+.attr-link:hover { background: rgba(78,160,230,0.3); text-decoration: none; }
 .photo-placeholder { width:200px; height:150px; background:#1a2d42; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:2rem; }
 
 </style>
@@ -1674,7 +1680,12 @@ addMarkers(m1, [
   {pos:[45.464,9.190], name:'Milano', desc:'Partenza ⚡'},
   {pos:[45.076,6.703], name:'Bardonecchia', desc:'Supercharger 250kW 🔋'},
   {pos:[47.322,5.041], name:'Digione', desc:'Palazzo dei Duchi • Supercharger 🔋'},
+
+  {pos:[47.322,5.041], name:'Palazzo dei Duchi di Borgogna', desc:'Digione — Museo storico', pinColor:'#f5a742'},
+  {pos:[47.316,5.016], name:'Rue de la Liberté', desc:'Digione — Centro storico', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m1, [{pos:[47.12,4.87], name:'Abri de Vergy', desc:'Rovine medievali panoramiche'}, {pos:[47.16,4.97], name:'Clos de Vougeot', desc:'Vigna borgognona, passeggiata gratis'}]);
 
 // Giorno 2: Digione → Beaune → Reims
 var m2 = makeMap('map-g2', [48.2, 4.5], 7,
@@ -1683,7 +1694,12 @@ addMarkers(m2, [
   {pos:[47.322,5.041], name:'Digione', desc:'Partenza'},
   {pos:[46.978,4.840], name:'Beaune', desc:'Hospices de Beaune 🏺'},
   {pos:[49.258,4.032], name:'Reims', desc:'Cattedrale UNESCO 🍾 • SC Saint-Quentin'},
+
+  {pos:[46.978,4.84], name:'Hospices de Beaune', desc:'Capolavoro gotico-fiammingo', pinColor:'#f5a742'},
+  {pos:[49.258,4.032], name:'Cattedrale di Reims', desc:'UNESCO — incoronazioni dei re di Francia', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m2, [{pos:[48.16,3.73], name:'Foresta di Othe', desc:'Boschi e laghi fuori dai radar'}, {pos:[48.72,3.72], name:'Sézanne', desc:'Città medievale — zero turisti'}]);
 
 // Giorno 3: Reims → Calais → Folkestone → Preston
 var m3 = makeMap('map-g3', [51.5, 0.5], 7,
@@ -1694,7 +1710,12 @@ addMarkers(m3, [
   {pos:[51.127,1.311], name:'Dover', desc:'White Cliffs 🌊'},
   {pos:[51.082,1.169], name:'Folkestone', desc:'Arrivo Eurotunnel 🚂'},
   {pos:[53.764,-2.699], name:'Preston', desc:'Hotel notturno 🏨'},
+
+  {pos:[50.949,1.858], name:'Calais — Eurotunnel', desc:'Traghetto o Eurostar', pinColor:'#f5a742'},
+  {pos:[51.127,1.311], name:'White Cliffs of Dover', desc:'Scogliere bianche iconiche', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m3, [{pos:[50.726,1.614], name:'Boulogne-sur-Mer', desc:'Centro storico medievale — 30min da Calais'}]);
 
 // Giorno 4: Preston → Glasgow
 var m4 = makeMap('map-g4', [54.3, -3.0], 7,
@@ -1704,7 +1725,12 @@ addMarkers(m4, [
   {pos:[54.900,-2.900], name:'Confine Scozia', desc:'Benvenuto in Scozia!'},
   {pos:[55.634,-3.695], name:'Abington', desc:'Supercharger M74 🔋'},
   {pos:[55.864,-4.252], name:'Glasgow', desc:'Destinazione 🏴󠁧󠁢󠁳󠁣󠁴󠁿'},
+
+  {pos:[54.433,-3.071], name:'Lake District', desc:'Parco nazionale — laghi e colline', pinColor:'#f5a742'},
+  {pos:[55.864,-4.252], name:'Glasgow Centre', desc:'Arrivo in Scozia', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m4, [{pos:[55.0,-3.04], name:'Gretna Green', desc:'Villaggio dei matrimoni fuggiaschi'}, {pos:[55.42,-3.39], name:'Devil\'s Beef Tub', desc:'Anfiteatro naturale misterioso'}]);
 
 // Giorno 5: Glasgow → Loch Lomond → Glencoe → Fort William
 var m5 = makeMap('map-g5', [56.3, -4.7], 8,
@@ -1715,7 +1741,13 @@ addMarkers(m5, [
   {pos:[56.676,-5.100], name:'Glencoe', desc:'Three Sisters — Valle del Massacro 🏔️'},
   {pos:[56.590,-5.120], name:'Glenfinnan Viaduct', desc:'Viadotto di Harry Potter! 🪄'},
   {pos:[56.820,-5.105], name:'Fort William', desc:'Ai piedi del Ben Nevis 🏔️'},
+
+  {pos:[55.869,-4.289], name:'Kelvingrove Art Gallery', desc:'Museo gratuito — gioiello vittoriano', pinColor:'#f5a742'},
+  {pos:[55.865,-4.242], name:'Glasgow Cathedral', desc:'Cattedrale medievale — XII sec.', pinColor:'#f5a742'},
+  {pos:[55.861,-4.247], name:'Necropolis', desc:'Cimitero vittoriano su collina', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m5, [{pos:[55.862,-4.251], name:'Necropolis', desc:'Vista panoramica su Glasgow — gratis'}, {pos:[55.861,-4.25], name:'Sharmanka Kinetic Theatre', desc:'Teatro meccanico unico al mondo'}]);
 
 // Giorno 6: Fort William → Eilean Donan → Skye
 var m6 = makeMap('map-g6', [57.1, -5.3], 8,
@@ -1726,7 +1758,13 @@ addMarkers(m6, [
   {pos:[57.340,-5.900], name:'Plockton', desc:'Villaggio da cartolina 🌺'},
   {pos:[57.250,-5.720], name:'Kyle of Lochalsh', desc:'Ponte per Skye 🌉'},
   {pos:[57.413,-6.193], name:'Portree — Skye', desc:'Destinazione 🌊'},
+
+  {pos:[56.383,-4.618], name:'Loch Lomond', desc:'Primo loch scozzese del viaggio', pinColor:'#f5a742'},
+  {pos:[56.82,-5.105], name:'Eilean Donan Castle', desc:'Il castello più fotografato di Scozia', pinColor:'#f5a742'},
+  {pos:[57.143,-5.509], name:'Isle of Skye', desc:'Arrivo sull\'isola', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m6, [{pos:[56.67,-4.63], name:'Rannoch Moor', desc:'La steppa più remota del UK'}, {pos:[56.68,-5.1], name:'Glencoe Massacre Site', desc:'Targa commemorativa 1692 — storia oscura'}]);
 
 // Giorno 7: Skye loop
 var m7 = makeMap('map-g7', [57.413,-6.193], 10,
@@ -1738,7 +1776,15 @@ addMarkers(m7, [
   {pos:[57.635,-6.295], name:'Quiraing', desc:'Paesaggio lunare 🌑 Trekking 6.5km'},
   {pos:[57.421,-6.787], name:'Neist Point', desc:'Faro Atlantico + balene 🐋'},
   {pos:[57.445,-6.578], name:'Dunvegan Castle', desc:'Clan MacLeod £15 🏰'},
+
+  {pos:[57.264,-6.186], name:'Fairy Pools', desc:'Cascate cristalline — trekking', pinColor:'#f5a742'},
+  {pos:[57.499,-6.18], name:'Old Man of Storr', desc:'Pinnacolo vulcanico iconico', pinColor:'#f5a742'},
+  {pos:[57.424,-6.787], name:'Neist Point', desc:'Faro atlantico — avvistamento cetacei', pinColor:'#f5a742'},
+  {pos:[57.411,-6.196], name:'Portree', desc:'Case colorate sul porto', pinColor:'#f5a742'},
+  {pos:[57.445,-6.589], name:'Dunvegan Castle', desc:'Castello abitato da 1000 anni', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m7, [{pos:[57.71,-6.33], name:'Rubha Hunish', desc:'Punta più a nord di Skye — zero turisti'}]);
 
 // Giorno 8: Skye → Inverness
 var m8 = makeMap('map-g8', [57.3, -5.0], 9,
@@ -1746,7 +1792,14 @@ var m8 = makeMap('map-g8', [57.3, -5.0], 9,
 addMarkers(m8, [
   {pos:[57.413,-6.193], name:'Portree — Skye', desc:'Partenza'},
   {pos:[57.477,-4.224], name:'Inverness', desc:'Castello di arenaria rosa 🏰'},
+
+  {pos:[57.478,-4.224], name:'Inverness', desc:'Capitale delle Highlands', pinColor:'#f5a742'},
+  {pos:[57.323,-4.419], name:'Urquhart Castle', desc:'Castello sul Loch Ness', pinColor:'#f5a742'},
+  {pos:[57.297,-4.431], name:'Loch Ness Centre', desc:'Mostra scientifica su Nessie', pinColor:'#f5a742'},
+  {pos:[56.681,-3.726], name:'Pitlochry', desc:'Villaggio vittoriano', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m8, [{pos:[57.29,-4.61], name:'Corrimony Cairn', desc:'Tomba neolitica 4000 anni — gratis'}, {pos:[57.07,-4.06], name:'Ruthven Barracks', desc:'Fortezza del \'700 in rovina — gratis'}]);
 
 // Giorno 9: Inverness → Loch Ness → Cairngorms → Pitlochry
 var m9 = makeMap('map-g9', [57.0, -4.1], 8,
@@ -1756,7 +1809,12 @@ addMarkers(m9, [
   {pos:[57.322,-4.426], name:'Loch Ness', desc:'Urquhart Castle 🏰 £15'},
   {pos:[57.120,-3.670], name:'Cairngorms NP', desc:'Cervi rossi, aquile reali 🦌'},
   {pos:[56.703,-3.733], name:'Pitlochry', desc:'Distilleria Blair Athol 🥃'},
+
+  {pos:[56.681,-3.726], name:'Blair Athol Distillery', desc:'Tour whisky a Pitlochry', pinColor:'#f5a742'},
+  {pos:[55.949,-3.2], name:'Edimburgo', desc:'Arrivo — cena sul Royal Mile', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m9, [{pos:[56.31,-3.61], name:'Dunning Village', desc:'Villaggio che bruciò le streghe nel 1716'}, {pos:[56.19,-3.42], name:'Loch Leven Castle', desc:'Castello di Maria Stuart — arrivo via barca'}]);
 
 // Giorno 10: Pitlochry → Edimburgo
 var m10 = makeMap('map-g10', [56.3, -3.4], 9,
@@ -1765,7 +1823,13 @@ addMarkers(m10, [
   {pos:[56.703,-3.733], name:'Pitlochry', desc:'Partenza'},
   {pos:[56.400,-3.400], name:'Stirling', desc:'Castello medievale'},
   {pos:[55.953,-3.189], name:'Edimburgo', desc:'Castello di Edimburgo 🏯 £18'},
+
+  {pos:[55.948,-3.2], name:'Edinburgh Castle', desc:'La rocca — vista sulla città', pinColor:'#f5a742'},
+  {pos:[55.952,-3.174], name:'Arthur\'s Seat', desc:'Vulcano estinto — trekking 1h', pinColor:'#f5a742'},
+  {pos:[55.952,-3.189], name:'Royal Mile', desc:'Via storica dal Castello a Holyrood', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m10, [{pos:[55.946,-3.191], name:'Greyfriars Kirkyard', desc:'Il cimitero più infestato d\'Europa — gratis'}, {pos:[55.95,-3.193], name:'Real Mary King\'s Close', desc:'Vicolo sotterraneo rinascimentale'}]);
 
 // Giorno 11: Edimburgo → Durham → York
 var m11 = makeMap('map-g11', [54.4, -2.2], 8,
@@ -1774,7 +1838,12 @@ addMarkers(m11, [
   {pos:[55.953,-3.189], name:'Edimburgo', desc:'Partenza'},
   {pos:[54.776,-1.576], name:'Durham', desc:'Cattedrale UNESCO 🕌 + Castello'},
   {pos:[53.958,-1.080], name:'York', desc:'The Shambles ⚔️ + Minster'},
+
+  {pos:[54.978,-1.617], name:'Durham Cathedral', desc:'Capolavoro normanno — UNESCO', pinColor:'#f5a742'},
+  {pos:[53.96,-1.085], name:'York Minster', desc:'Cattedrale gotica — la più grande del Nord', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m11, [{pos:[55.67,-1.8], name:'Lindisfarne Holy Island', desc:'Isola delle maree — monastero del 635 d.C.'}]);
 
 // Giorno 12: York → Dover → Calais
 var m12 = makeMap('map-g12', [51.8, 0.5], 7,
@@ -1783,7 +1852,12 @@ addMarkers(m12, [
   {pos:[53.958,-1.080], name:'York', desc:'Partenza'},
   {pos:[51.127,1.311], name:'Dover', desc:'White Cliffs 🌊 + Traghetto DFDS'},
   {pos:[50.949,1.858], name:'Calais', desc:'Arrivo in Francia 🥖'},
+
+  {pos:[51.127,1.311], name:'White Cliffs of Dover', desc:'Vista verso la Francia', pinColor:'#f5a742'},
+  {pos:[51.127,1.321], name:'South Foreland Lighthouse', desc:'Faro National Trust', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m12, [{pos:[51.1,1.33], name:'Samphire Hoe', desc:'Terra bonificata dai lavori del tunnel — natura selvaggia'}]);
 
 // Giorno 13: Calais → Strasburgo → Colmar
 var m13 = makeMap('map-g13', [49.5, 5.0], 7,
@@ -1793,7 +1867,12 @@ addMarkers(m13, [
   {pos:[49.258,4.032], name:'Reims', desc:'Supercharger 🔋'},
   {pos:[48.574,7.752], name:'Strasburgo', desc:'Petite France UNESCO 🥨'},
   {pos:[48.077,7.358], name:'Colmar', desc:'Alsazia da cartolina 🍷'},
+
+  {pos:[49.258,4.032], name:'Reims', desc:'Sosta champagne', pinColor:'#f5a742'},
+  {pos:[48.584,7.745], name:'Strasburgo', desc:'Centro storico UNESCO — la Petite France', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m13, [{pos:[49.38,2.83], name:'Forêt de Compiègne', desc:'Bosco reale 15.000ha — sconosciuto ai turisti'}]);
 
 // Giorno 14: Strasburgo → Basilea → Lugano → Milano
 var m14 = makeMap('map-g14', [47.0, 8.0], 7,
@@ -1803,7 +1882,12 @@ addMarkers(m14, [
   {pos:[47.558,7.587], name:'Basilea', desc:'Pausa caffè sul Reno 🇨🇭'},
   {pos:[46.005,8.952], name:'Lugano', desc:'Ultimo stop — Lago di Lugano 🏔️'},
   {pos:[45.464,9.190], name:'Milano', desc:'🏠 Casa!'},
+
+  {pos:[47.557,7.592], name:'Basilea', desc:'Sosta facoltativa — museo Fondation Beyeler', pinColor:'#f5a742'},
+  {pos:[45.464,9.19], name:'Milano', desc:'🏠 Ritorno a casa!', pinColor:'#f5a742'},
 ]);
+
+addUnconventionalMarkers(m14, [{pos:[45.99,9.26], name:'Bellagio — Lago di Como', desc:'Sosta finale panoramica'}]);
 
 
   // Force all maps to recalculate size
