@@ -1297,11 +1297,6 @@ footer strong { color: var(--gold); }
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// Wait for full DOM + styles to load
-window.addEventListener('load', function() {
-  // Small delay to ensure layout is computed
-  setTimeout(function() {
-
 function toggleNav() {
   document.getElementById('navLinks').classList.toggle('open');
 }
@@ -1314,7 +1309,11 @@ function closeLightbox() {
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 
-// Dark tile layer factory
+document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeLightbox(); });
+
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    // Dark tile layer factory
 function darkTiles() {
   return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors',
@@ -1526,7 +1525,12 @@ addMarkers(m14, [
   });
 }
 
-  }, 100);
+    // Force all maps to recalculate size
+    var allMaps = [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
+    allMaps.forEach(function(m) {
+      if (m) m.invalidateSize();
+    });
+  }, 200);
 });
 </script>
 </body>
