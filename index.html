@@ -232,11 +232,17 @@ footer strong { color: var(--gold); }
 .pdf-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.5); }
 .pdf-btn:active { transform: translateY(0); }
 @media print {
-  .pdf-btn, .nav-arrow, .days-nav, nav, .days-scroll { display: none !important; }
-  .day-section { display: block !important; }
-  .day-map { height: 280px !important; }
+  .pdf-btn, .nav-arrow, .days-nav, nav, .days-scroll, .top-nav { display: none !important; }
+  .day-section { display: block !important; page-break-before: always; }
+  .day-section:first-child { page-break-before: avoid; }
+  .day-map { height: 220px !important; }
   body { background: white !important; color: black !important; }
+  .attraction-card { border: 1px solid #ccc; }
 }
+
+.attr-link { color: var(--blue); font-size:0.8rem; display:block; margin-top:6px; text-decoration:none; }
+.attr-link:hover { text-decoration: underline; }
+.photo-placeholder { width:200px; height:150px; background:#1a2d42; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:2rem; }
 
 </style>
 </head>
@@ -320,8 +326,8 @@ footer strong { color: var(--gold); }
   <div id="map-g1" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g1_1_b4c2cd73.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Palazzo dei Duchi di Borgogna, Digione">
-    <img src="/workspace/downloads/web_g5_2_afa4bb09.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Paesaggio alpino">
+    <div class="photo-placeholder">📷</div>
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -329,6 +335,8 @@ footer strong { color: var(--gold); }
       <h3>Palazzo dei Duchi di Borgogna</h3>
       <p>Grandiosa piazza semicircolare, ex residenza ducale — il cuore di Digione. Museo delle Belle Arti al piano nobile.</p>
       <span class="tag free">Gratis (esterno)</span>
+    
+      <a href="https://www.musee-des-beaux-arts-dijon.fr" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Rue de la Chouette</h3>
@@ -339,11 +347,28 @@ footer strong { color: var(--gold); }
       <h3>Mercato Les Halles</h3>
       <p>Imponente mercato coperto progettato da Gustave Eiffel. Formaggi, vini, senape Maille — il meglio della Borgogna sotto un tetto.</p>
       <span class="tag free">Gratis (ingresso)</span>
+    
+      <a href="https://www.marche-dijon.fr" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Senape Maille</h3>
       <p>La boutique storica della senape più famosa del mondo. Degustazioni gratuite di oltre 30 varianti incluse la senape al Chablis.</p>
       <span class="tag">Degustazione gratuita</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Abri de Vergy</h3>
+      <p>Rovine di un castello medievale su un crinale panoramico sopra i vigneti della Borgogna. Nessuna folla, vista a 360°.</p>
+      <span class="tag">Gratis</span>
+    </div>
+    <div class="attraction-card">
+      <h3>Clos de Vougeot</h3>
+      <p>Iconica vigna murata del XII sec. — passeggiata gratuita lungo il perimetro esterno tra i vigneti più famosi del mondo.</p>
+      <span class="tag">Gratis (passeggiata)</span>
+      <a href="https://www.closdevougeot.fr" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="section-label">ℹ️ Info Pratiche</div>
@@ -383,8 +408,8 @@ footer strong { color: var(--gold); }
   <div id="map-g2" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g2_1_10d13c78.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Hospices de Beaune - tetti colorati">
-    <img src="/workspace/downloads/web_g2_2_74672efd.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Cattedrale Notre-Dame di Reims">
+    <div class="photo-placeholder">📷</div>
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -407,6 +432,21 @@ footer strong { color: var(--gold); }
       <h3>Cantine Champagne</h3>
       <p>Taittinger o Mumm: tour nelle cantine sotterranee (km di gallerie a 10°C), degustazione di 3 flûte inclusa. Prenotare online.</p>
       <span class="tag">€20-25/pp</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Foresta di Othe</h3>
+      <p>Boschi e laghetti nascosti tra Borgogna e Champagne. Sosta nature fuori dai circuiti.</p>
+      <span class="tag">Gratis</span>
+    </div>
+    <div class="attraction-card">
+      <h3>Sézanne</h3>
+      <p>Cittadina medievale della Champagne dove si vive ancora come cent'anni fa. Zero turisti, bollicine doc.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.sezanne-champagne.fr" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -445,8 +485,8 @@ footer strong { color: var(--gold); }
   <div id="map-g3" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g3_1_086aa134.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover">
-    <img src="/workspace/downloads/web_g12_1_af055589.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Scogliere di Dover dal mare">
+    <div class="photo-placeholder">📷</div>
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -459,11 +499,23 @@ footer strong { color: var(--gold); }
       <h3>White Cliffs of Dover</h3>
       <p>Deviazione 20 minuti da Folkestone. Le falesie bianche di gesso, icona dell'Inghilterra. Vista verso la Francia nelle giornate limpide.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.nationaltrust.org.uk/white-cliffs-dover" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Castello di Dover</h3>
       <p>Opzionale: fortezza normanna con i Secret Wartime Tunnels della WWII. Vista spettacolare sul canale.</p>
       <span class="tag">£19/pp</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Boulogne-sur-Mer</h3>
+      <p>A 30 min da Calais: il centro storico medievale murato più integro del Nord Francia. Ignorato dai turisti del tunnel.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.tourisme-boulognesurmer.com" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -502,7 +554,7 @@ footer strong { color: var(--gold); }
   <div id="map-g4" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g4_1_e157b3b7.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Glasgow Cathedral">
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -510,21 +562,42 @@ footer strong { color: var(--gold); }
       <h3>Glasgow Cathedral</h3>
       <p>Unica cattedrale medievale scozzese intatta. Cripta romanica del XII sec con tomba di San Mungo — il fondatore della città. Adiacente la Necropolis.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.historicenvironment.scot/visit-a-place/places/glasgow-cathedral/" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Necropolis</h3>
       <p>Collina dei morti vittoriana con vista panoramica su Glasgow. 50.000 sepolture, 3.500 monumenti. Atmosfera gotica unica.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.glasgownecropolis.org" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Kelvingrove Art Gallery</h3>
       <p>Uno dei musei più visitati del Regno Unito — gratis! Collezione di 8.000 opere inclusi Dalí, Rembrandt e armature medievali.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.glasgowlife.org.uk/museums/venues/kelvingrove-art-gallery-and-museum" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>West End &amp; Byres Road</h3>
       <p>Il quartiere universitario più vivace. Caffè indipendenti, pub tradizionali, mercato di Ashton Lane. Atmosfera rilassata e cosmopolita.</p>
       <span class="tag free">Gratis (passeggiata)</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Gretna Green</h3>
+      <p>Il villaggio dei matrimoni fuggiaschi: dal 1754 coppie fuggono dall'Inghilterra per sposarsi davanti all'incudine del fabbro.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.gretnagreen.com" target="_blank" class="attr-link">🔗 Scopri di più</a>
+    </div>
+    <div class="attraction-card">
+      <h3>Devil's Beef Tub</h3>
+      <p>Anfiteatro naturale misterioso tra le colline scozzesi, usato dai ladri di bestiame come nascondiglio. Paesaggio lunare.</p>
+      <span class="tag">Gratis</span>
     </div>
   </div>
   <div class="cards-row">
@@ -565,8 +638,8 @@ footer strong { color: var(--gold); }
   <div id="map-g5" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g5_2_afa4bb09.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Loch Lomond dall'alto">
-    <img src="/workspace/downloads/web_g5_1_00975eda.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Glencoe - Three Sisters">
+    <div class="photo-placeholder">📷</div>
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -574,6 +647,8 @@ footer strong { color: var(--gold); }
       <h3>Loch Lomond</h3>
       <p>Il lago più grande del Regno Unito — 71 km². Trossachs National Park. Vista da Luss Pier o dal Viewpoint di Ben Lomond.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.lochlomond-trossachs.org" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Glencoe — Three Sisters</h3>
@@ -584,6 +659,24 @@ footer strong { color: var(--gold); }
       <h3>Glenfinnan Viaduct</h3>
       <p>Il viadotto di Harry Potter! 21 arcate su cui passa ancora il Jacobite Steam Train. Vista migliore dal viewpoint sopra il viadotto (20 min a piedi).</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.jacobite.co.uk" target="_blank" class="attr-link">🔗 Scopri di più</a>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Necropolis di Glasgow</h3>
+      <p>Cimitero vittoriano su collina sopra la cattedrale. 50.000 sepolture, alba da brivido.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.glasgownecropolis.org" target="_blank" class="attr-link">🔗 Scopri di più</a>
+    </div>
+    <div class="attraction-card">
+      <h3>Sharmanka Kinetic Theatre</h3>
+      <p>Teatro meccanico unico al mondo: sculture di metallo che danzano su musica drammatica. Fondato da artista russo in esilio.</p>
+      <span class="tag">£10/pp</span>
+      <a href="https://www.sharmanka.com" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -622,7 +715,7 @@ footer strong { color: var(--gold); }
   <div id="map-g6" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g6_1_888b058d.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Eilean Donan Castle">
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -630,6 +723,8 @@ footer strong { color: var(--gold); }
       <h3>Ben Nevis</h3>
       <p>Vista dalla base sul monte più alto delle Isole Britanniche (1344m). Partenza trekking dal Glen Nevis Visitor Centre per chi vuole salire.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.visitscotland.com/info/towns-villages/ben-nevis-p246751" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Eilean Donan Castle</h3>
@@ -645,6 +740,21 @@ footer strong { color: var(--gold); }
       <h3>Plockton</h3>
       <p>Villaggio da cartolina sul Loch Carron con palme tropicali (micro-clima mite). Fisherman's cottages fotografatissimi. Deviazione 15 min.</p>
       <span class="tag free">Gratis</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Rannoch Moor</h3>
+      <p>La steppa più remota del UK: 50 km² di torbiere e cielo. Silenzio assoluto. La vera Scozia selvaggia.</p>
+      <span class="tag">Gratis</span>
+    </div>
+    <div class="attraction-card">
+      <h3>Glencoe Massacre Site</h3>
+      <p>La targa che ricorda il massacro del 1692 — 38 MacDonald uccisi nel sonno. Storia scozzese dura e vera.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.nts.org.uk/visit/places/glencoe" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -683,8 +793,8 @@ footer strong { color: var(--gold); }
   <div id="map-g7" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g7_1_7ce88edf.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Fairy Pools - cascate Skye">
-    <img src="/workspace/downloads/web_g7_2_2c9abc32.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Old Man of Storr - Skye">
+    <div class="photo-placeholder">📷</div>
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -692,11 +802,15 @@ footer strong { color: var(--gold); }
       <h3>Fairy Pools</h3>
       <p>Cascate di acqua cristallina azzurra nelle Cuillin Mountains. Trekking 2km A/R facilissimo. Alba o tramonto per luci magiche.</p>
       <span class="tag free">Gratis (parcheggio £5)</span>
+    
+      <a href="https://www.visitscotland.com/info/outdoor-activities/fairy-pools-p995131" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Old Man of Storr</h3>
       <p>Pinnacolo roccioso di 48m, simbolo di Skye. Trekking 5km, ~2h. Vista sulla baia di Portree e le isole Outer Hebrides nelle giornate limpide.</p>
       <span class="tag free">Gratis (parcheggio £3)</span>
+    
+      <a href="https://www.visitscotland.com/info/towns-villages/old-man-of-storr-p246741" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Quiraing</h3>
@@ -707,6 +821,8 @@ footer strong { color: var(--gold); }
       <h3>Neist Point</h3>
       <p>Faro all'estremo ovest di Skye sull'Atlantico. Avvistamento cetacei (delfini, balene minke). Trekking 3km. Tramonto indimenticabile.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.visitscotland.com/info/outdoor-activities/neist-point-p246731" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Portree Harbour</h3>
@@ -717,6 +833,22 @@ footer strong { color: var(--gold); }
       <h3>Dunvegan Castle</h3>
       <p>Il castello abitato ininterrottamente più antico delle Isole Britanniche (1.000+ anni). Clan MacLeod. Giardini impeccabili.</p>
       <span class="tag">£15/pp</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Rubha Hunish</h3>
+      <p>La punta più a nord di Skye: promontorio remoto con vista sulle Outer Hebrides. Zero turisti.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.visitscotland.com/destinations-maps/skye" target="_blank" class="attr-link">🔗 Scopri di più</a>
+    </div>
+    <div class="attraction-card">
+      <h3>Old Man of Storr all'alba</h3>
+      <p>Alzarsi alle 4:30 e salire prima del sole: rocce nella nebbia, nessuna folla, luce magica. Esperienza trasformante.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.visitscotland.com/info/towns-villages/old-man-of-storr-p246741" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -755,7 +887,7 @@ footer strong { color: var(--gold); }
   <div id="map-g8" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g8_1_6cea3561.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Inverness Castle - arenaria rossa">
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -778,6 +910,24 @@ footer strong { color: var(--gold); }
       <h3>Distilleria Dalmore</h3>
       <p>25 km da Inverness. Tour nella distilleria più premiata delle Highlands con degustazione di 3 single malt. Prenotare online.</p>
       <span class="tag">£20/pp</span>
+    
+      <a href="https://www.thedalmore.com/visit" target="_blank" class="attr-link">🔗 Scopri di più</a>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Corrimony Cairn</h3>
+      <p>Tomba neolitica a camera di 4000 anni, in piena campagna delle Highlands. Una pietra coperta di licheni, silenzio preistorico.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.historicenvironment.scot" target="_blank" class="attr-link">🔗 Scopri di più</a>
+    </div>
+    <div class="attraction-card">
+      <h3>Ruthven Barracks</h3>
+      <p>Fortezza georgiana in rovina del 1719, costruita per domare i clan dopo la rivolta giacobita. Panorama drammatico.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.historicenvironment.scot" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -816,7 +966,7 @@ footer strong { color: var(--gold); }
   <div id="map-g9" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g9_1_5da00c2b.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Castello di Urquhart - Loch Ness">
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -824,6 +974,8 @@ footer strong { color: var(--gold); }
       <h3>Castello di Urquhart</h3>
       <p>Le rovine più scenografiche della Scozia, sul bordo del Loch Ness. Torre medievale ancora in piedi. Vista sul loch impagabile. Tenebre e mistero garantiti.</p>
       <span class="tag">£15/pp</span>
+    
+      <a href="https://www.historicenvironment.scot/visit-a-place/places/urquhart-castle/" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Drumnadrochit — Nessie</h3>
@@ -839,6 +991,21 @@ footer strong { color: var(--gold); }
       <h3>Pitlochry &amp; Blair Athol</h3>
       <p>Villaggio vittoriano da cartolina. Distilleria Blair Athol (tour + degustazione). Festival Theatre. Cascata del salmon ladder (settembre-ottobre).</p>
       <span class="tag">£12/pp (distilleria)</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Dunning Village</h3>
+      <p>Il paese dove nel 1716 fu bruciata l'ultima strega della Scozia: Maggie Wall. Una pietra la ricorda ancora nel campo.</p>
+      <span class="tag">Gratis</span>
+    </div>
+    <div class="attraction-card">
+      <h3>Kinross e Loch Leven</h3>
+      <p>Il lago dove Maria Regina di Scozia fu imprigionata nel 1567. Castello sull'isola raggiungibile in barca.</p>
+      <span class="tag">£8/pp (barca)</span>
+      <a href="https://www.historicenvironment.scot/visit-a-place/places/loch-leven-castle" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -877,7 +1044,7 @@ footer strong { color: var(--gold); }
   <div id="map-g10" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g10_1_76c243d0.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Arthur's Seat - Edimburgo">
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -890,11 +1057,15 @@ footer strong { color: var(--gold); }
       <h3>Royal Mile</h3>
       <p>Il miglio più famoso della Scozia dal Castello a Holyrood Palace. Negozi di tartan, pub storici, musici di cornamusa. Camminare senza fretta.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.visitscotland.com/destinations-maps/edinburgh/royal-mile/" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Arthur's Seat</h3>
       <p>Vulcano spento di 251m nel cuore della città. Trekking 2h circolare, vista a 360° su Edimburgo, Firth of Forth e Highlands. Dog-friendly!</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.edinburghcastle.scot/see-do/holyrood-park/" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Greyfriars Kirkyard</h3>
@@ -910,6 +1081,21 @@ footer strong { color: var(--gold); }
       <h3>Scotch Whisky Experience</h3>
       <p>Tour immersivo nella storia del whisky scozzese con degustazione di 4 regioni. La collezione più grande al mondo (3.384 bottiglie).</p>
       <span class="tag">£17/pp</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Greyfriars Kirkyard</h3>
+      <p>Il cimitero più "infestato" d'Europa. Casa del fedele cagnolino Bobby e di oscuri personaggi storici.</p>
+      <span class="tag">Gratis</span>
+    </div>
+    <div class="attraction-card">
+      <h3>The Real Mary King's Close</h3>
+      <p>Vicolo medievale sotterraneo conservato sotto la Royal Mile dal 1600: abitazioni, peste, segreti.</p>
+      <span class="tag">£19/pp</span>
+      <a href="https://www.realmarykingsclose.com" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -950,8 +1136,8 @@ footer strong { color: var(--gold); }
   <div id="map-g11" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g11_1_297ed415.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Durham Cathedral - River Wear">
-    <img src="/workspace/downloads/web_g11_2_18db9ec4.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="The Shambles - York">
+    <div class="photo-placeholder">📷</div>
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -959,6 +1145,8 @@ footer strong { color: var(--gold); }
       <h3>Durham Cathedral</h3>
       <p>UNESCO. Romanica normanna sul promontorio fluviale del River Wear. Tomba di Bede il Venerabile e S. Cuthbert. Una delle cattedrali più belle d'Europa.</p>
       <span class="tag">Donazione £5</span>
+    
+      <a href="https://www.durhamcathedral.co.uk" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Castello di Durham</h3>
@@ -974,6 +1162,8 @@ footer strong { color: var(--gold); }
       <h3>York Minster</h3>
       <p>La cattedrale gotica più grande del Nord Europa. Vetrate medievali di 128m². Vista dalla torre con 275 gradini — vale ogni scalino.</p>
       <span class="tag">£13/pp</span>
+    
+      <a href="https://yorkminster.org" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Mura Romane di York</h3>
@@ -984,6 +1174,16 @@ footer strong { color: var(--gold); }
       <h3>Jorvik Viking Centre</h3>
       <p>Ricostruzione immersiva dell'insediamento vichingo di Jorvik (X sec). Odori, suoni e figuranti in costume. Richiede prenotazione.</p>
       <span class="tag">£14/pp</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Lindisfarne — Holy Island</h3>
+      <p>Isola raggiungibile solo con la bassa marea. Monastero del 635 d.C. dove nacque il Vangelo illuminato. Esperienza mistica.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.lindisfarne.org.uk" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -1022,8 +1222,8 @@ footer strong { color: var(--gold); }
   <div id="map-g12" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g12_1_af055589.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover - vista panoramica">
-    <img src="/workspace/downloads/web_g3_1_086aa134.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Scogliere bianche dall'alto">
+    <div class="photo-placeholder">📷</div>
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -1031,6 +1231,8 @@ footer strong { color: var(--gold); }
       <h3>White Cliffs of Dover</h3>
       <p>Sosta obbligatoria prima del traghetto. Vista iconica verso la Francia. South Foreland Lighthouse e National Trust clifftop trail.</p>
       <span class="tag free">Gratis</span>
+    
+      <a href="https://www.nationaltrust.org.uk/white-cliffs-dover" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Dover Castle</h3>
@@ -1041,6 +1243,16 @@ footer strong { color: var(--gold); }
       <h3>Traghetto DFDS Dover-Calais</h3>
       <p>~90 min di traversata. Cani ammessi in auto nel garage o in cabina pet-friendly dedicata. Prenotare online. Bar e ristorante a bordo.</p>
       <span class="tag warn">~€50/pp (incluso auto)</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Samphire Hoe</h3>
+      <p>Terra strappata al mare coi lavori del Tunnel della Manica: riserva naturale selvaggia sotto le scogliere bianche.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.samphirehoe.com" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -1079,7 +1291,7 @@ footer strong { color: var(--gold); }
   <div id="map-g13" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g13_1_8e3836c5.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Strasburgo - Petite France canale">
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -1092,16 +1304,30 @@ footer strong { color: var(--gold); }
       <h3>Cattedrale di Strasburgo</h3>
       <p>In arenaria rosa: la guglia più alta d'Europa per 200 anni. Piattaforma panoramica (€5). Orologio astronomico con automi medievali.</p>
       <span class="tag">€5 (piattaforma)</span>
+    
+      <a href="https://www.cathedrale-strasbourg.fr" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Europarlamento</h3>
       <p>Tour gratuito del Parlamento Europeo (prenotare online). Aula emiciclo — visita unica e rarissima. Solo in certi orari con documento.</p>
       <span class="tag free">Gratis (prenotare)</span>
+    
+      <a href="https://www.europarl.europa.eu/visiting/en/" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
     <div class="attraction-card">
       <h3>Colmar — Alsazia</h3>
       <p>Canal dei Conciatori, Maison des Têtes, case dipinte in rosa e giallo. I vigneti alsaziani al tramonto. Riesling e Gewürztraminer.</p>
       <span class="tag free">Gratis (passeggiata)</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Forêt de Compiègne</h3>
+      <p>Foresta reale di 15.000 ettari dove fu firmato l'armistizio del 1918. Sentieri, cervi, silenzio. Fuori da ogni circuito.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.onf.fr/onf/+/2bc::foret-de-compiegne.html" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -1140,7 +1366,7 @@ footer strong { color: var(--gold); }
   <div id="map-g14" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="/workspace/downloads/web_g14_1_0775e988.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Lago di Como - villaggio alpino">
+    <div class="photo-placeholder">📷</div>
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -1158,6 +1384,16 @@ footer strong { color: var(--gold); }
       <h3>Vignetta Svizzera</h3>
       <p>Obbligatoria per transitare sulle autostrade svizzere — acquistarla online prima o al confine. Valida tutto l'anno solare. €42 / anno.</p>
       <span class="tag warn">€42 (annuale)</span>
+    </div>
+  </div>
+  
+  <div class="section-label">🔮 Scoperte Non Convenzionali</div>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <h3>Bellagio sul Lago di Como</h3>
+      <p>Sosta finale prima di Milano: il borgo-promontorio tra i due rami del lago. Scalinate fiorite, ville, barche bianche.</p>
+      <span class="tag">Gratis</span>
+      <a href="https://www.bellagiolakecomo.com" target="_blank" class="attr-link">🔗 Scopri di più</a>
     </div>
   </div>
   <div class="cards-row">
@@ -1370,23 +1606,52 @@ cities.forEach(c => {
 });
 
 // ===== MAPPE GIORNALIERE =====
-function makeMap(id, center, zoom, waypoints, color) {
+function colorPin(color) {
+  return L.divIcon({
+    html: '<div style="width:14px;height:14px;background:'+color+';border:2px solid white;border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,0.5)"></div>',
+    className: '', iconAnchor: [7,7]
+  });
+}
+
+async function makeMap(id, center, zoom, waypoints, color) {
   const m = L.map(id).setView(center, zoom);
   darkTiles().addTo(m);
   if(waypoints && waypoints.length > 1) {
-    const poly = L.polyline(waypoints, {color: color||'#4ea0e6', weight:4}).addTo(m);
-    m.fitBounds(poly.getBounds(), {padding:[50,50], maxZoom:13});
+    let drawn = false;
+    try {
+      const coords = waypoints.map(p => p[1]+','+p[0]).join(';');
+      const url = 'https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson';
+      const resp = await fetch(url);
+      const data = await resp.json();
+      if(data.routes && data.routes[0]) {
+        const poly = L.geoJSON(data.routes[0].geometry, {style:{color: color||'#4ea0e6', weight:4}}).addTo(m);
+        m.fitBounds(poly.getBounds(), {padding:[50,50], maxZoom:13});
+        drawn = true;
+      }
+    } catch(e) {}
+    if(!drawn) {
+      const poly = L.polyline(waypoints, {color: color||'#4ea0e6', weight:4}).addTo(m);
+      m.fitBounds(poly.getBounds(), {padding:[50,50], maxZoom:13});
+    }
   }
   return m;
 }
+
 function addMarkers(m, points) {
   points.forEach(p => {
-    L.marker(p.pos).addTo(m).bindPopup('<b>'+p.name+'</b>'+(p.desc?'<br>'+p.desc:''));
+    const pin = p.pinColor ? colorPin(p.pinColor) : colorPin('#4ea0e6');
+    L.marker(p.pos, {icon: pin}).addTo(m).bindPopup('<b>'+p.name+'</b>'+(p.desc?'<br>'+p.desc:''));
   });
   if(points.length > 0) {
     const allPts = points.map(p => p.pos);
     m.fitBounds(L.latLngBounds(allPts), {padding:[50,50], maxZoom:13});
   }
+}
+
+function addUnconventionalMarkers(m, points) {
+  points.forEach(p => {
+    L.marker(p.pos, {icon: colorPin('#a855f7')}).addTo(m).bindPopup('<b>'+p.name+'</b><br>🔮 Non convenzionale'+(p.desc?'<br>'+p.desc:''));
+  });
 }
 
 // Giorno 1: Milano → Digione
