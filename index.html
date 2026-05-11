@@ -1307,13 +1307,10 @@ function openLightbox(img) {
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
 }
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
-
 document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeLightbox(); });
 
 window.addEventListener('load', function() {
-  setTimeout(function() {
-    // Dark tile layer factory
+  // Dark tile layer factory
 function darkTiles() {
   return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors',
@@ -1530,7 +1527,11 @@ addMarkers(m14, [
     allMaps.forEach(function(m) {
       if (m) m.invalidateSize();
     });
-  }, 200);
+
+  // Force redraw
+  [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14].forEach(function(m) {
+    if (m) m.invalidateSize();
+  });
 });
 </script>
 </body>
