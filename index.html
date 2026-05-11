@@ -22,6 +22,23 @@
   --orange: #f5a742;
   --red: #e05c5c;
   --radius: 14px;
+  --nav-bg: rgba(13,27,42,0.95);
+  --hr-color: rgba(78,160,230,0.18);
+}
+[data-theme="light"] {
+  --bg: #f4f6f9;
+  --card: #ffffff;
+  --card2: #eef2f8;
+  --gold: #c9920a;
+  --blue: #1a6eb5;
+  --text: #1a2433;
+  --muted: #5a7290;
+  --green: #1e5c3a;
+  --green2: #2e7d55;
+  --orange: #c97300;
+  --red: #c0392b;
+  --nav-bg: rgba(244,246,249,0.97);
+  --hr-color: rgba(26,110,181,0.18);
 }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; }
@@ -29,7 +46,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 /* ===== TOP NAV ===== */
 .top-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-  background: rgba(13,27,42,0.95); backdrop-filter: blur(10px);
+  background: var(--nav-bg); backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(78,160,230,0.2);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px; height: 56px;
@@ -40,9 +57,11 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 .nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 500; padding: 4px 8px; border-radius: 20px; white-space: nowrap; transition: all .2s; }
 .nav-links a:hover { color: var(--gold); background: rgba(245,200,66,0.1); }
 .nav-toggle { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 4px; display: none; }
+.theme-toggle { background: none; border: 1.5px solid var(--blue); border-radius: 20px; color: var(--text); font-size: 16px; cursor: pointer; padding: 3px 10px; margin-left: 8px; transition: background 0.2s; }
+.theme-toggle:hover { background: var(--card); }
 @media (max-width: 600px) {
   .nav-links { display: none; }
-  .nav-links.open { display: flex; position: fixed; top: 56px; left: 0; right: 0; background: rgba(13,27,42,0.98); flex-wrap: wrap; padding: 12px; border-bottom: 1px solid rgba(78,160,230,0.2); z-index: 998; }
+  .nav-links.open { display: flex; position: fixed; top: 56px; left: 0; right: 0; background: var(--nav-bg); flex-wrap: wrap; padding: 12px; border-bottom: 1px solid rgba(78,160,230,0.2); z-index: 998; }
   .nav-toggle { display: block; }
 }
 
@@ -254,7 +273,7 @@ footer strong { color: var(--gold); }
 /* ===== SECTION DIVIDER ===== */
 .section-divider {
   border: none;
-  border-top: 1px solid rgba(78,160,230,0.18);
+  border-top: 1px solid var(--hr-color);
   margin: 32px 0 28px 0;
 }
 
@@ -276,6 +295,7 @@ footer strong { color: var(--gold); }
     <a href="#budget">💰</a><a href="#zelda">🐕</a>
   </div>
   <button class="nav-toggle" onclick="toggleNav()">☰</button>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Modalità chiara/scura">🌙</button>
 </nav>
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
@@ -1643,6 +1663,28 @@ footer strong { color: var(--gold); }
 function toggleNav() {
   document.getElementById('navLinks').classList.toggle('open');
 }
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  if (html.getAttribute('data-theme') === 'light') {
+    html.removeAttribute('data-theme');
+    btn.textContent = '🌙';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    html.setAttribute('data-theme', 'light');
+    btn.textContent = '☀️';
+    localStorage.setItem('theme', 'light');
+  }
+}
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('themeToggle');
+      if (btn) btn.textContent = '☀️';
+    });
+  }
+})();
 function openLightbox(img) {
   document.getElementById('lightbox-img').src = img.src;
   document.getElementById('lightbox').classList.add('active');
