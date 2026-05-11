@@ -255,6 +255,37 @@ footer strong { color: var(--gold); }
 .day-section { display: none; }
 .day-section.active { display: block; }
 
+
+/* ===== PDF DOWNLOAD BUTTON ===== */
+.pdf-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  background: var(--gold);
+  color: #0d1b2a;
+  border: none;
+  border-radius: 50px;
+  padding: 13px 22px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.pdf-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.5); }
+.pdf-btn:active { transform: translateY(0); }
+@media print {
+  .pdf-btn, .nav-arrow, .days-nav, nav, .days-scroll { display: none !important; }
+  .day-section { display: block !important; }
+  .day-map { height: 280px !important; }
+  body { background: white !important; color: black !important; }
+}
+
 </style>
 </head>
 <body>
@@ -270,7 +301,7 @@ footer strong { color: var(--gold); }
     <a href="#giorno7">GG7</a><a href="#giorno8">GG8</a><a href="#giorno9">GG9</a>
     <a href="#giorno10">GG10</a><a href="#giorno11">GG11</a><a href="#giorno12">GG12</a>
     <a href="#giorno13">GG13</a><a href="#giorno14">GG14</a>
-    <a href="#budget">💰</a><a href="#zelda">🐕</a>
+    <a href="#budget">💰</a>
   </div>
   <button class="nav-toggle" onclick="toggleNav()">☰</button>
 </nav>
@@ -375,10 +406,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Ibis Styles Dijon Nord (~€85/notte)<br>Hôtel du Nord Dijon (~€95)<br>Entrambi dog-friendly con piccolo supplemento.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Parco della Colombière (ampio, ideale per Vizsla). Giardini del Palazzo Ducale dog-friendly al guinzaglio. Bar center accettano cani all'aperto.</p>
+<p>Parco della Colombière (ampio, ideale per Vizsla). Giardini del Palazzo Ducale dog-friendly al guinzaglio. Bar center accettano cani all'aperto.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -387,9 +415,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~€197</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -439,10 +465,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Novotel Reims Tinqueux (~€110, dog-friendly)<br>Ibis Reims Centre (~€80)<br>Parcheggio gratuito disponibile.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Vigneti e campi aperti attorno a Beaune — paradiso per correre libera. Parco Léo Lagrange a Reims per la passeggiata serale.</p>
+<p>Vigneti e campi aperti attorno a Beaune — paradiso per correre libera. Parco Léo Lagrange a Reims per la passeggiata serale.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -451,9 +474,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~€247</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -498,10 +519,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Premier Inn Preston Central (~£75)<br>Holiday Inn Express Preston (~£85)<br>Entrambi accettano cani.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Eurotunnel: cani restano in auto nel vagone ✅. Area verde Welcome Break M6 per la sosta. White Cliffs: percorsi dog-friendly sul clifftop.</p>
+<p>Eurotunnel: cani restano in auto nel vagone ✅. Area verde Welcome Break M6 per la sosta. White Cliffs: percorsi dog-friendly sul clifftop.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -510,9 +528,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~€290</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -561,10 +577,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Premier Inn Glasgow City Centre (~£90)<br>Moxy Glasgow (~£85)<br>Entrambi in zona centrale, dog-friendly.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Kelvingrove Park (67 ettari, libero al guinzaglio in aree designate). Glasgow Green — il parco pubblico più antico della città.</p>
+<p>Kelvingrove Park (67 ettari, libero al guinzaglio in aree designate). Glasgow Green — il parco pubblico più antico della città.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -573,9 +586,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£173</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -622,10 +633,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Moorings Hotel Fort William (~£95, dog-friendly)<br>Alexandra Hotel Fort William (~£80)<br>Vista su Loch Linnhe.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Sentieri aperti tutto il giorno lungo Glencoe — nessun guinzaglio obbligatorio in campo aperto. Rive del Loch Lomond dog-friendly. Paradiso Vizsla!</p>
+<p>Sentieri aperti tutto il giorno lungo Glencoe — nessun guinzaglio obbligatorio in campo aperto. Rive del Loch Lomond dog-friendly. Paradiso Vizsla!</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -634,9 +642,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£145</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -685,10 +691,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Cuillin Hills Hotel Portree (~£120, dog-friendly)<br>Skeabost Country House (~£150)<br>Vista Cuillin Mountains.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Spiagge di Skye accettano cani tutto l'anno (nessun divieto stagionale). Coral Beach e Talisker Bay ideali. Eilean Donan esterno dog-friendly.</p>
+<p>Spiagge di Skye accettano cani tutto l'anno (nessun divieto stagionale). Coral Beach e Talisker Bay ideali. Eilean Donan esterno dog-friendly.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -697,9 +700,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£203</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -759,10 +760,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Portree Hotel (~£100)<br>Bosville Hotel Portree (~£110)<br>Entrambi in centro a Portree, dog-friendly.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Fairy Pools, Storr e Neist Point — tutti dog-friendly senza restrizioni. Talisker Bay (spiaggia nera vulcanica) perfetta per correre. Giornata da sogno per un Vizsla!</p>
+<p>Fairy Pools, Storr e Neist Point — tutti dog-friendly senza restrizioni. Talisker Bay (spiaggia nera vulcanica) perfetta per correre. Giornata da sogno per un Vizsla!</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -771,9 +769,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£180</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -822,10 +818,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Kingsmills Hotel Inverness (~£110, dog-friendly)<br>Ibis Inverness (~£75)<br>Entrambi vicini al centro.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Ness Islands — sentieri dog-friendly lungo il fiume, Zelda può nuotare nel Ness (acqua fredda ma lei adorerà!). Bellissima corsa mattutina.</p>
+<p>Ness Islands — sentieri dog-friendly lungo il fiume, Zelda può nuotare nel Ness (acqua fredda ma lei adorerà!). Bellissima corsa mattutina.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -834,9 +827,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£190</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -885,10 +876,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Atholl Palace Hotel Pitlochry (~£130, dog-friendly)<br>Pitlochry Festival Hotel (~£90)<br>L'Atholl è un palazzo vittoriano magnifico.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Cairngorms è il parco più dog-friendly del UK — nessuna restrizione sui sentieri. Riva del Loch Ness libera. Correre tra i cervi a Rothiemurchus.</p>
+<p>Cairngorms è il parco più dog-friendly del UK — nessuna restrizione sui sentieri. Riva del Loch Ness libera. Correre tra i cervi a Rothiemurchus.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -897,9 +885,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£252</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -958,10 +944,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Apex Waterloo Hotel (~£120, dog-friendly)<br>Grassmarket Hotel (~£110)<br>Entrambi in zona Old Town.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Arthur's Seat e Holyrood Park — dog-friendly e liberissimi. Greyfriars Kirkyard: porta Zelda al cimitero del cane Bobby, omaggio obbligatorio!</p>
+<p>Arthur's Seat e Holyrood Park — dog-friendly e liberissimi. Greyfriars Kirkyard: porta Zelda al cimitero del cane Bobby, omaggio obbligatorio!</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -970,9 +953,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£270</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -1034,10 +1015,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>The Principal York (~£130)<br>Ibis York Centre (~£85)<br>Entrambi a 5 min a piedi da The Shambles.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Mura di York dog-friendly (passeggiata panoramica). Museum Gardens accetta cani. Durham — rive del River Wear libere per correre.</p>
+<p>Mura di York dog-friendly (passeggiata panoramica). Museum Gardens accetta cani. Durham — rive del River Wear libere per correre.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1046,9 +1024,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~£269</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -1093,10 +1069,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Ibis Calais (~€65)<br>Holiday Inn Express Calais (~€75)<br>Entrambi vicini al porto, dog-friendly.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>DFDS: cani accettati in auto nel garage del traghetto ✅. Cabina pet-friendly disponibile a extra cost. White Cliffs: percorso cliff top dog-friendly.</p>
+<p>DFDS: cani accettati in auto nel garage del traghetto ✅. Cabina pet-friendly disponibile a extra cost. White Cliffs: percorso cliff top dog-friendly.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1105,9 +1078,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~€305</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -1156,10 +1127,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Mercure Strasburgo Centre (~€110, dog-friendly)<br>Ibis Strasburgo Centre (~€85)<br>A piedi dalla Petite France.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Lunghe passeggiate nei vigneti alsaziani intorno a Colmar. Strasburgo: Parc de l'Orangerie dog-friendly (flamingo park!). Rive del canale libere.</p>
+<p>Lunghe passeggiate nei vigneti alsaziani intorno a Colmar. Strasburgo: Parc de l'Orangerie dog-friendly (flamingo park!). Rive del canale libere.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1168,9 +1136,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~€230</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -1214,10 +1180,7 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Destinazione finale</div>
       <p>Milano — casa! Arrivo nel tardo pomeriggio. Brindisi di benvenuto e cena degna di 14 giorni di avventura.</p>
     </div>
-    <div class="info-card zelda">
-      <span class="ic-icon">🐕</span>
-      <div class="ic-title">Con Zelda</div>
-      <p>Ultima tappa! Zelda ha girato mezza Europa — merita una cena speciale e il divano di casa. Riva del lago di Lugano dog-friendly per l'ultima corsa.</p>
+<p>Ultima tappa! Zelda ha girato mezza Europa — merita una cena speciale e il divano di casa. Riva del lago di Lugano dog-friendly per l'ultima corsa.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1226,9 +1189,7 @@ footer strong { color: var(--gold); }
       <div class="budget-total">Totale: ~€125</div>
     </div>
   </div>
-  <div class="notes-area">
-    <p class="notes-label">✏️ Note personali</p>
-    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+<div class="note-line"></div><div class="note-line"></div>
   </div>
 </section>
 
@@ -1303,44 +1264,7 @@ footer strong { color: var(--gold); }
 </div>
 
 <!-- ===== ZELDA TIPS ===== -->
-<div class="zelda-section" id="zelda">
-  <h2>🐕 Guida Completa: Viaggiare con Zelda</h2>
-  <p style="text-align:center;color:var(--muted);margin-bottom:24px;font-size:14px;">Tutto quello che serve per portare una Vizsla Ungherese in UK e Scozia</p>
-  <div class="zelda-tips">
-    <div class="zelda-tip">
-      <h3>📋 Documenti Obbligatori</h3>
-      <p>Passaporto veterinario UE aggiornato. Microchip ISO 11784/5. Vaccino antirabbico valido. Titolazione anticorpi rabbia (test FAVN) se richiesto. Trattamento antielminti 24-120h prima del rientro in UK.</p>
-    </div>
-    <div class="zelda-tip">
-      <h3>🚂 Eurotunnel Le Shuttle</h3>
-      <p>Zelda resta comodamente in auto nel vagone ✅. Nessun trasporto in gabbia, nessuna separazione. Verificare regole PETS scheme UK al momento del viaggio.</p>
-    </div>
-    <div class="zelda-tip">
-      <h3>⛴️ Traghetto DFDS</h3>
-      <p>Cani in auto nel garage del traghetto ✅. Cabina pet-friendly disponibile per la traversata (~90min). Cibo e acqua consigliati prima della partenza.</p>
-    </div>
-    <div class="zelda-tip">
-      <h3>🏴󠁧󠁢󠁳󠁣󠁴󠁿 Highlands — Paradiso Vizsla</h3>
-      <p>Le Highlands scozzesi sono il posto più dog-friendly del pianeta. Sentieri aperti, nessun guinzaglio obbligatorio in campo aperto, corsi d'acqua per nuotare ovunque. Zelda si sentirà a casa.</p>
-    </div>
-    <div class="zelda-tip">
-      <h3>🏖️ Spiagge di Skye</h3>
-      <p>Tutte le spiagge dell'Isola di Skye accettano cani tutto l'anno. Talisker Bay (spiaggia nera vulcanica), Coral Beach (corallo bianco), Camasunary Bay. Nessun divieto stagionale come in Italia.</p>
-    </div>
-    <div class="zelda-tip">
-      <h3>📱 App Utili</h3>
-      <p><strong>Dogs Trust</strong> — hotel e B&amp;B dog-friendly in UK.<br><strong>Ordnance Survey</strong> — mappe sentieri con filtro dog-friendly.<br><strong>BringFido</strong> — ristoranti dog-friendly ovunque.<br><strong>Visit Scotland</strong> — attrazioni pet-friendly.</p>
-    </div>
-    <div class="zelda-tip">
-      <h3>🌡️ Clima e Comfort</h3>
-      <p>Scozia: temperatura 8-18°C in estate. Impermeabile leggero per Zelda consigliato in Highlands. Acqua potabile ovunque dai corsi d'acqua. Asciugamano per auto dopo ogni tappa fluviale.</p>
-    </div>
-    <div class="zelda-tip">
-      <h3>⚡ Tesla con Cane</h3>
-      <p>Modalità Dog Mode: mantiene 22°C in auto con display che avvisa i passanti. Fondamentale per soste al Supercharger. Portellone con protezione per il pianale bagagliaio consigliata.</p>
-    </div>
-  </div>
-</div>
+
 
 <footer>
   <p>🚗 <strong>Milano → Glasgow → Milano</strong> · 14 Giorni · Tesla Model Y · Zelda 🐕</p>
@@ -1608,7 +1532,7 @@ function addMarkers(m, points) {
     L.marker(p.pos).addTo(m).bindPopup('<b>'+p.name+'</b>'+(p.desc?'<br>'+p.desc:''));
     bounds.push(p.pos);
   });
-  if (bounds.length > 0) m.fitBounds(bounds, {padding:[40,40], maxZoom:12});
+  if (bounds.length > 0) m.fitBounds(bounds, {padding:[50,50], maxZoom:13});
 }
 
 function drawRoute(m, waypoints, color, dashed) {
@@ -1742,5 +1666,23 @@ function changeDay(delta) {
 document.getElementById('giorno1').classList.add('active');
 
 </script>
+
+<button class="pdf-btn" onclick="printPage()">
+  ⬇️ Scarica PDF
+</button>
+<script>
+function printPage() {
+  // Show all days before printing
+  var sections = document.querySelectorAll('.day-section');
+  sections.forEach(function(s){ s.style.display = 'block'; });
+  window.print();
+  // Restore after print
+  setTimeout(function(){
+    sections.forEach(function(s){ s.style.display = ''; });
+    document.getElementById('giorno' + currentDay).classList.add('active');
+  }, 1000);
+}
+</script>
+
 </body>
 </html>
