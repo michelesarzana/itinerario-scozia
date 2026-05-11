@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Milano → Glasgow → Milano | Itinerario 14 Giorni</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & BASE ===== */
@@ -207,55 +208,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 footer { text-align: center; padding: 40px 16px; font-size: 13px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.07); }
 footer strong { color: var(--gold); }
 
-/* ===== DAY NAVIGATION ARROWS ===== */
-.days-wrapper {
-  position: relative;
-}
-.days-nav {
-  position: sticky;
-  top: 70px;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: rgba(13,27,42,0.92);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(78,160,230,0.15);
-  max-width: 1000px;
-  margin: 0 auto;
-}
-.days-nav .day-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--gold);
-  min-width: 200px;
-  text-align: center;
-}
-.nav-arrow {
-  background: var(--card);
-  border: 1px solid rgba(78,160,230,0.3);
-  color: var(--blue);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 1.3rem;
-  transition: background 0.2s, transform 0.1s;
-  user-select: none;
-  flex-shrink: 0;
-}
-.nav-arrow:hover { background: var(--card2); transform: scale(1.08); }
-.nav-arrow:active { transform: scale(0.95); }
-.nav-arrow.disabled { opacity: 0.25; cursor: default; pointer-events: none; }
-.day-section { display: none; }
-.day-section.active { display: block; }
-
-
 /* ===== PDF DOWNLOAD BUTTON ===== */
 .pdf-btn {
   position: fixed;
@@ -301,7 +253,7 @@ footer strong { color: var(--gold); }
     <a href="#giorno7">GG7</a><a href="#giorno8">GG8</a><a href="#giorno9">GG9</a>
     <a href="#giorno10">GG10</a><a href="#giorno11">GG11</a><a href="#giorno12">GG12</a>
     <a href="#giorno13">GG13</a><a href="#giorno14">GG14</a>
-    <a href="#budget">💰</a>
+    <a href="#budget">💰</a><a href="#zelda">🐕</a>
   </div>
   <button class="nav-toggle" onclick="toggleNav()">☰</button>
 </nav>
@@ -326,7 +278,7 @@ footer strong { color: var(--gold); }
 </section>
 <div class="section-map" id="mappa">
   <h2>🗺️ Il Percorso Completo</h2>
-  <div id="mappa-panoramica" style="width:100%;height:500px;"></div>
+  <div id="mappa-panoramica" style="height:500px;border-radius:16px;border:1px solid rgba(78,160,230,0.3);"></div>
   <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--muted);">
     <span>━━ <span style="color:#4ea0e6">Andata</span></span>
     <span style="letter-spacing:2px">- - -</span> <span style="color:#f5a742">Ritorno</span>
@@ -354,11 +306,6 @@ footer strong { color: var(--gold); }
 </div>
 <div class="route-divider"><span>✦ ANDATA ✦</span></div>
 
-<div class="days-nav" id="daysNav">
-  <button class="nav-arrow disabled" id="prevDay" onclick="changeDay(-1)">&#8592;</button>
-  <span class="day-label" id="dayNavLabel">Giorno 1 — Milano → Digione</span>
-  <button class="nav-arrow" id="nextDay" onclick="changeDay(1)">&#8594;</button>
-</div>
 <!-- ===== GIORNO 1 ===== -->
 <section class="day-section" id="giorno1">
   <div class="day-header">
@@ -370,11 +317,11 @@ footer strong { color: var(--gold); }
       <span>🕐 ~4.5h guida</span>
     </div>
   </div>
-  <div id="map-g1" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g1" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_001.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Palazzo dei Duchi di Borgogna, Digione">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_002.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Paesaggio alpino">
+    <img src="/workspace/downloads/web_g1_1_b4c2cd73.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Palazzo dei Duchi di Borgogna, Digione">
+    <img src="/workspace/downloads/web_g5_2_afa4bb09.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Paesaggio alpino">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -406,7 +353,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Ibis Styles Dijon Nord (~€85/notte)<br>Hôtel du Nord Dijon (~€95)<br>Entrambi dog-friendly con piccolo supplemento.</p>
     </div>
-<p>Parco della Colombière (ampio, ideale per Vizsla). Giardini del Palazzo Ducale dog-friendly al guinzaglio. Bar center accettano cani all'aperto.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Parco della Colombière (ampio, ideale per Vizsla). Giardini del Palazzo Ducale dog-friendly al guinzaglio. Bar center accettano cani all'aperto.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -430,11 +380,11 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3.5h guida + deviazione Beaune</span>
     </div>
   </div>
-  <div id="map-g2" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g2" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_003.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Hospices de Beaune - tetti colorati">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_004.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Cattedrale Notre-Dame di Reims">
+    <img src="/workspace/downloads/web_g2_1_10d13c78.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Hospices de Beaune - tetti colorati">
+    <img src="/workspace/downloads/web_g2_2_74672efd.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Cattedrale Notre-Dame di Reims">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -465,7 +415,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Novotel Reims Tinqueux (~€110, dog-friendly)<br>Ibis Reims Centre (~€80)<br>Parcheggio gratuito disponibile.</p>
     </div>
-<p>Vigneti e campi aperti attorno a Beaune — paradiso per correre libera. Parco Léo Lagrange a Reims per la passeggiata serale.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Vigneti e campi aperti attorno a Beaune — paradiso per correre libera. Parco Léo Lagrange a Reims per la passeggiata serale.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -489,11 +442,11 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5.5h guida + 35min Eurotunnel</span>
     </div>
   </div>
-  <div id="map-g3" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g3" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_005.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_006.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Scogliere di Dover dal mare">
+    <img src="/workspace/downloads/web_g3_1_086aa134.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover">
+    <img src="/workspace/downloads/web_g12_1_af055589.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Scogliere di Dover dal mare">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -519,7 +472,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Premier Inn Preston Central (~£75)<br>Holiday Inn Express Preston (~£85)<br>Entrambi accettano cani.</p>
     </div>
-<p>Eurotunnel: cani restano in auto nel vagone ✅. Area verde Welcome Break M6 per la sosta. White Cliffs: percorsi dog-friendly sul clifftop.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Eurotunnel: cani restano in auto nel vagone ✅. Area verde Welcome Break M6 per la sosta. White Cliffs: percorsi dog-friendly sul clifftop.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -543,10 +499,10 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3h guida</span>
     </div>
   </div>
-  <div id="map-g4" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g4" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_007.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Glasgow Cathedral">
+    <img src="/workspace/downloads/web_g4_1_e157b3b7.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Glasgow Cathedral">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -577,7 +533,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Premier Inn Glasgow City Centre (~£90)<br>Moxy Glasgow (~£85)<br>Entrambi in zona centrale, dog-friendly.</p>
     </div>
-<p>Kelvingrove Park (67 ettari, libero al guinzaglio in aree designate). Glasgow Green — il parco pubblico più antico della città.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Kelvingrove Park (67 ettari, libero al guinzaglio in aree designate). Glasgow Green — il parco pubblico più antico della città.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -603,11 +562,11 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3h guida (con soste)</span>
     </div>
   </div>
-  <div id="map-g5" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g5" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_002.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Loch Lomond dall'alto">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_009.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Glencoe - Three Sisters">
+    <img src="/workspace/downloads/web_g5_2_afa4bb09.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Loch Lomond dall'alto">
+    <img src="/workspace/downloads/web_g5_1_00975eda.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Glencoe - Three Sisters">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -633,7 +592,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Moorings Hotel Fort William (~£95, dog-friendly)<br>Alexandra Hotel Fort William (~£80)<br>Vista su Loch Linnhe.</p>
     </div>
-<p>Sentieri aperti tutto il giorno lungo Glencoe — nessun guinzaglio obbligatorio in campo aperto. Rive del Loch Lomond dog-friendly. Paradiso Vizsla!</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Sentieri aperti tutto il giorno lungo Glencoe — nessun guinzaglio obbligatorio in campo aperto. Rive del Loch Lomond dog-friendly. Paradiso Vizsla!</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -657,10 +619,10 @@ footer strong { color: var(--gold); }
       <span>🕐 ~2.5h guida</span>
     </div>
   </div>
-  <div id="map-g6" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g6" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_010.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Eilean Donan Castle">
+    <img src="/workspace/downloads/web_g6_1_888b058d.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Eilean Donan Castle">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -691,7 +653,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Cuillin Hills Hotel Portree (~£120, dog-friendly)<br>Skeabost Country House (~£150)<br>Vista Cuillin Mountains.</p>
     </div>
-<p>Spiagge di Skye accettano cani tutto l'anno (nessun divieto stagionale). Coral Beach e Talisker Bay ideali. Eilean Donan esterno dog-friendly.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Spiagge di Skye accettano cani tutto l'anno (nessun divieto stagionale). Coral Beach e Talisker Bay ideali. Eilean Donan esterno dog-friendly.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -715,11 +680,11 @@ footer strong { color: var(--gold); }
       <span>🕐 Giornata piena di trekking</span>
     </div>
   </div>
-  <div id="map-g7" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g7" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_011.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Fairy Pools - cascate Skye">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_012.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Old Man of Storr - Skye">
+    <img src="/workspace/downloads/web_g7_1_7ce88edf.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Fairy Pools - cascate Skye">
+    <img src="/workspace/downloads/web_g7_2_2c9abc32.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Old Man of Storr - Skye">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -760,7 +725,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Portree Hotel (~£100)<br>Bosville Hotel Portree (~£110)<br>Entrambi in centro a Portree, dog-friendly.</p>
     </div>
-<p>Fairy Pools, Storr e Neist Point — tutti dog-friendly senza restrizioni. Talisker Bay (spiaggia nera vulcanica) perfetta per correre. Giornata da sogno per un Vizsla!</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Fairy Pools, Storr e Neist Point — tutti dog-friendly senza restrizioni. Talisker Bay (spiaggia nera vulcanica) perfetta per correre. Giornata da sogno per un Vizsla!</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -784,10 +752,10 @@ footer strong { color: var(--gold); }
       <span>🕐 ~2.5h guida</span>
     </div>
   </div>
-  <div id="map-g8" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g8" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_013.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Inverness Castle - arenaria rossa">
+    <img src="/workspace/downloads/web_g8_1_6cea3561.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Inverness Castle - arenaria rossa">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -818,7 +786,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Kingsmills Hotel Inverness (~£110, dog-friendly)<br>Ibis Inverness (~£75)<br>Entrambi vicini al centro.</p>
     </div>
-<p>Ness Islands — sentieri dog-friendly lungo il fiume, Zelda può nuotare nel Ness (acqua fredda ma lei adorerà!). Bellissima corsa mattutina.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Ness Islands — sentieri dog-friendly lungo il fiume, Zelda può nuotare nel Ness (acqua fredda ma lei adorerà!). Bellissima corsa mattutina.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -842,10 +813,10 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3h guida (con soste)</span>
     </div>
   </div>
-  <div id="map-g9" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g9" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_014.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Castello di Urquhart - Loch Ness">
+    <img src="/workspace/downloads/web_g9_1_5da00c2b.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Castello di Urquhart - Loch Ness">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -876,7 +847,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Atholl Palace Hotel Pitlochry (~£130, dog-friendly)<br>Pitlochry Festival Hotel (~£90)<br>L'Atholl è un palazzo vittoriano magnifico.</p>
     </div>
-<p>Cairngorms è il parco più dog-friendly del UK — nessuna restrizione sui sentieri. Riva del Loch Ness libera. Correre tra i cervi a Rothiemurchus.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Cairngorms è il parco più dog-friendly del UK — nessuna restrizione sui sentieri. Riva del Loch Ness libera. Correre tra i cervi a Rothiemurchus.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -900,10 +874,10 @@ footer strong { color: var(--gold); }
       <span>🕐 ~1.5h guida</span>
     </div>
   </div>
-  <div id="map-g10" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g10" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_015.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Arthur's Seat - Edimburgo">
+    <img src="/workspace/downloads/web_g10_1_76c243d0.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Arthur's Seat - Edimburgo">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -944,7 +918,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Apex Waterloo Hotel (~£120, dog-friendly)<br>Grassmarket Hotel (~£110)<br>Entrambi in zona Old Town.</p>
     </div>
-<p>Arthur's Seat e Holyrood Park — dog-friendly e liberissimi. Greyfriars Kirkyard: porta Zelda al cimitero del cane Bobby, omaggio obbligatorio!</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Arthur's Seat e Holyrood Park — dog-friendly e liberissimi. Greyfriars Kirkyard: porta Zelda al cimitero del cane Bobby, omaggio obbligatorio!</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -970,11 +947,11 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3.5h guida (con soste)</span>
     </div>
   </div>
-  <div id="map-g11" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g11" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_016.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Durham Cathedral - River Wear">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_017.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="The Shambles - York">
+    <img src="/workspace/downloads/web_g11_1_297ed415.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Durham Cathedral - River Wear">
+    <img src="/workspace/downloads/web_g11_2_18db9ec4.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="The Shambles - York">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -1015,7 +992,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>The Principal York (~£130)<br>Ibis York Centre (~£85)<br>Entrambi a 5 min a piedi da The Shambles.</p>
     </div>
-<p>Mura di York dog-friendly (passeggiata panoramica). Museum Gardens accetta cani. Durham — rive del River Wear libere per correre.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Mura di York dog-friendly (passeggiata panoramica). Museum Gardens accetta cani. Durham — rive del River Wear libere per correre.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1039,11 +1019,11 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5h guida + 90min traghetto</span>
     </div>
   </div>
-  <div id="map-g12" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g12" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_006.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover - vista panoramica">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_005.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Scogliere bianche dall'alto">
+    <img src="/workspace/downloads/web_g12_1_af055589.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover - vista panoramica">
+    <img src="/workspace/downloads/web_g3_1_086aa134.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Scogliere bianche dall'alto">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -1069,7 +1049,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Ibis Calais (~€65)<br>Holiday Inn Express Calais (~€75)<br>Entrambi vicini al porto, dog-friendly.</p>
     </div>
-<p>DFDS: cani accettati in auto nel garage del traghetto ✅. Cabina pet-friendly disponibile a extra cost. White Cliffs: percorso cliff top dog-friendly.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>DFDS: cani accettati in auto nel garage del traghetto ✅. Cabina pet-friendly disponibile a extra cost. White Cliffs: percorso cliff top dog-friendly.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1093,10 +1076,10 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5h guida</span>
     </div>
   </div>
-  <div id="map-g13" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g13" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_020.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Strasburgo - Petite France canale">
+    <img src="/workspace/downloads/web_g13_1_8e3836c5.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Strasburgo - Petite France canale">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -1127,7 +1110,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Hotel consigliati</div>
       <p>Mercure Strasburgo Centre (~€110, dog-friendly)<br>Ibis Strasburgo Centre (~€85)<br>A piedi dalla Petite France.</p>
     </div>
-<p>Lunghe passeggiate nei vigneti alsaziani intorno a Colmar. Strasburgo: Parc de l'Orangerie dog-friendly (flamingo park!). Rive del canale libere.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Lunghe passeggiate nei vigneti alsaziani intorno a Colmar. Strasburgo: Parc de l'Orangerie dog-friendly (flamingo park!). Rive del canale libere.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1151,10 +1137,10 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5h guida (con pausa)</span>
     </div>
   </div>
-  <div id="map-g14" class="day-map" style="height:350px;min-height:350px;width:100%;"></div>
+  <div id="map-g14" class="day-map"></div>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
-    <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_021.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Lago di Como - villaggio alpino">
+    <img src="/workspace/downloads/web_g14_1_0775e988.jpg" class="gallery-photo" onclick="openLightbox(this)" alt="Lago di Como - villaggio alpino">
   </div>
   <div class="section-label">🏛️ Cosa Vedere</div>
   <div class="attractions-grid">
@@ -1180,7 +1166,10 @@ footer strong { color: var(--gold); }
       <div class="ic-title">Destinazione finale</div>
       <p>Milano — casa! Arrivo nel tardo pomeriggio. Brindisi di benvenuto e cena degna di 14 giorni di avventura.</p>
     </div>
-<p>Ultima tappa! Zelda ha girato mezza Europa — merita una cena speciale e il divano di casa. Riva del lago di Lugano dog-friendly per l'ultima corsa.</p>
+    <div class="info-card zelda">
+      <span class="ic-icon">🐕</span>
+      <div class="ic-title">Con Zelda</div>
+      <p>Ultima tappa! Zelda ha girato mezza Europa — merita una cena speciale e il divano di casa. Riva del lago di Lugano dog-friendly per l'ultima corsa.</p>
     </div>
     <div class="info-card budget">
       <span class="ic-icon">💰</span>
@@ -1264,7 +1253,44 @@ footer strong { color: var(--gold); }
 </div>
 
 <!-- ===== ZELDA TIPS ===== -->
-
+<div class="zelda-section" id="zelda">
+  <h2>🐕 Guida Completa: Viaggiare con Zelda</h2>
+  <p style="text-align:center;color:var(--muted);margin-bottom:24px;font-size:14px;">Tutto quello che serve per portare una Vizsla Ungherese in UK e Scozia</p>
+  <div class="zelda-tips">
+    <div class="zelda-tip">
+      <h3>📋 Documenti Obbligatori</h3>
+      <p>Passaporto veterinario UE aggiornato. Microchip ISO 11784/5. Vaccino antirabbico valido. Titolazione anticorpi rabbia (test FAVN) se richiesto. Trattamento antielminti 24-120h prima del rientro in UK.</p>
+    </div>
+    <div class="zelda-tip">
+      <h3>🚂 Eurotunnel Le Shuttle</h3>
+      <p>Zelda resta comodamente in auto nel vagone ✅. Nessun trasporto in gabbia, nessuna separazione. Verificare regole PETS scheme UK al momento del viaggio.</p>
+    </div>
+    <div class="zelda-tip">
+      <h3>⛴️ Traghetto DFDS</h3>
+      <p>Cani in auto nel garage del traghetto ✅. Cabina pet-friendly disponibile per la traversata (~90min). Cibo e acqua consigliati prima della partenza.</p>
+    </div>
+    <div class="zelda-tip">
+      <h3>🏴󠁧󠁢󠁳󠁣󠁴󠁿 Highlands — Paradiso Vizsla</h3>
+      <p>Le Highlands scozzesi sono il posto più dog-friendly del pianeta. Sentieri aperti, nessun guinzaglio obbligatorio in campo aperto, corsi d'acqua per nuotare ovunque. Zelda si sentirà a casa.</p>
+    </div>
+    <div class="zelda-tip">
+      <h3>🏖️ Spiagge di Skye</h3>
+      <p>Tutte le spiagge dell'Isola di Skye accettano cani tutto l'anno. Talisker Bay (spiaggia nera vulcanica), Coral Beach (corallo bianco), Camasunary Bay. Nessun divieto stagionale come in Italia.</p>
+    </div>
+    <div class="zelda-tip">
+      <h3>📱 App Utili</h3>
+      <p><strong>Dogs Trust</strong> — hotel e B&amp;B dog-friendly in UK.<br><strong>Ordnance Survey</strong> — mappe sentieri con filtro dog-friendly.<br><strong>BringFido</strong> — ristoranti dog-friendly ovunque.<br><strong>Visit Scotland</strong> — attrazioni pet-friendly.</p>
+    </div>
+    <div class="zelda-tip">
+      <h3>🌡️ Clima e Comfort</h3>
+      <p>Scozia: temperatura 8-18°C in estate. Impermeabile leggero per Zelda consigliato in Highlands. Acqua potabile ovunque dai corsi d'acqua. Asciugamano per auto dopo ogni tappa fluviale.</p>
+    </div>
+    <div class="zelda-tip">
+      <h3>⚡ Tesla con Cane</h3>
+      <p>Modalità Dog Mode: mantiene 22°C in auto con display che avvisa i passanti. Fondamentale per soste al Supercharger. Portellone con protezione per il pianale bagagliaio consigliata.</p>
+    </div>
+  </div>
+</div>
 
 <footer>
   <p>🚗 <strong>Milano → Glasgow → Milano</strong> · 14 Giorni · Tesla Model Y · Zelda 🐕</p>
@@ -1272,8 +1298,16 @@ footer strong { color: var(--gold); }
   <p style="margin-top:12px;font-size:12px;">Mappa © <a href="https://www.openstreetmap.org" style="color:var(--blue)" target="_blank">OpenStreetMap contributors</a> · Leaflet.js</p>
 </footer>
 
-
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// Wait for full DOM + styles to load
+window.addEventListener('load', function() {
+  // Small delay to ensure layout is computed
+  setTimeout(initAllMaps, 100);
+});
+
+function initAllMaps() {
+
 function toggleNav() {
   document.getElementById('navLinks').classList.toggle('open');
 }
@@ -1284,12 +1318,10 @@ function openLightbox(img) {
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
 }
-document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeLightbox(); });
-</script>
-<script>
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 
-  // Dark tile layer factory
-  function darkTiles() {
+// Dark tile layer factory
+function darkTiles() {
   return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors',
     maxZoom: 18
@@ -1297,25 +1329,25 @@ document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeLig
 }
 
 // ===== MAPPA PANORAMICA =====
-var mapPan = L.map('mappa-panoramica').setView([52, 0], 5);
+const mapPan = L.map('mappa-panoramica').setView([52, 0], 5);
 darkTiles().addTo(mapPan);
 
-var andata = [
+const andata = [
   [45.464,9.190],[45.076,6.703],[47.322,5.041],[46.978,4.840],
   [49.258,4.032],[49.846,3.287],[50.949,1.858],[51.082,1.169],
   [53.764,-2.699],[55.634,-3.695],[55.864,-4.252],[56.087,-4.590],
   [56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224]
 ];
-var ritorno = [
+const ritorno = [
   [57.477,-4.224],[57.322,-4.426],[57.120,-3.670],[56.703,-3.733],
   [55.953,-3.189],[54.776,-1.576],[53.958,-1.080],[51.126,1.311],
   [50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358],
   [47.558,7.587],[46.005,8.952],[45.464,9.190]
 ];
-drawPanRoute(mapPan, andata, '#4ea0e6', false);
-drawPanRoute(mapPan, ritorno, '#f5a742', true);
+L.polyline(andata, {color:'#4ea0e6', weight:3, opacity:0.9}).addTo(mapPan);
+L.polyline(ritorno, {color:'#f5a742', weight:3, opacity:0.9, dashArray:'8,6'}).addTo(mapPan);
 
-var cities = [
+const cities = [
   {name:'Milano 🏙️', pos:[45.464,9.190]},
   {name:'Digione 🍷', pos:[47.322,5.041]},
   {name:'Beaune 🏺', pos:[46.978,4.840]},
@@ -1339,10 +1371,11 @@ cities.forEach(c => {
 
 // ===== MAPPE GIORNALIERE =====
 function makeMap(id, center, zoom, waypoints, color) {
-  var m = L.map(id).setView(center, zoom);
+  const m = L.map(id).setView(center, zoom);
   darkTiles().addTo(m);
   if(waypoints && waypoints.length > 1) {
-    L.polyline(waypoints, {color: color||'#4ea0e6', weight:4}).addTo(m);
+    const poly = L.polyline(waypoints, {color: color||'#4ea0e6', weight:4}).addTo(m);
+    m.fitBounds(poly.getBounds(), {padding:[50,50], maxZoom:13});
   }
   return m;
 }
@@ -1350,6 +1383,10 @@ function addMarkers(m, points) {
   points.forEach(p => {
     L.marker(p.pos).addTo(m).bindPopup('<b>'+p.name+'</b>'+(p.desc?'<br>'+p.desc:''));
   });
+  if(points.length > 0) {
+    const allPts = points.map(p => p.pos);
+    m.fitBounds(L.latLngBounds(allPts), {padding:[50,50], maxZoom:13});
+  }
 }
 
 // Giorno 1: Milano → Digione
@@ -1491,196 +1528,29 @@ addMarkers(m14, [
 ]);
 
 
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-
-// ===== LEAFLET MAP INIT =====
-
-function darkTiles() {
-  return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org">OpenStreetMap</a>',
-    maxZoom: 18
+  // Force all maps to recalculate size
+  var allMaps = [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
+  allMaps.forEach(function(m) {
+    if (m) {
+      m.invalidateSize();
+    }
   });
 }
-
-function makeMap(id, center, zoom, waypoints, color) {
-  var el = document.getElementById(id);
-  if (!el) return null;
-  var m = L.map(id, {scrollWheelZoom: false}).setView(center, zoom);
-  darkTiles().addTo(m);
-  if (waypoints && waypoints.length > 1) {
-    var coords = waypoints.map(function(p){ return p[1]+','+p[0]; }).join(';');
-    fetch('https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson')
-      .then(function(r){ return r.json(); })
-      .then(function(d){
-        if(d.routes && d.routes[0]){
-          L.geoJSON(d.routes[0].geometry,{style:{color:color||'#4ea0e6',weight:4,opacity:0.9}}).addTo(m);
-        }
-      })
-      .catch(function(){
-        L.polyline(waypoints,{color:color||'#4ea0e6',weight:4,opacity:0.9,dashArray:'6,4'}).addTo(m);
-      });
-  }
-  return m;
-}
-
-function addMarkers(m, points) {
-  if (!m) return;
-  var bounds = [];
-  points.forEach(function(p){
-    L.marker(p.pos).addTo(m).bindPopup('<b>'+p.name+'</b>'+(p.desc?'<br>'+p.desc:''));
-    bounds.push(p.pos);
-  });
-  if (bounds.length > 0) m.fitBounds(bounds, {padding:[50,50], maxZoom:13});
-}
-
-function drawRoute(m, waypoints, color, dashed) {
-  var coords = waypoints.map(function(p){ return p[1]+','+p[0]; }).join(';');
-  fetch('https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson')
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      if(d.routes && d.routes[0]){
-        var style = {color:color, weight:3, opacity:0.9};
-        if(dashed) style.dashArray='8,6';
-        L.geoJSON(d.routes[0].geometry,{style:style}).addTo(m);
-      }
-    })
-    .catch(function(){
-      var style = {color:color, weight:3, opacity:0.9};
-      if(dashed) style.dashArray='8,6';
-      L.polyline(waypoints,style).addTo(m);
-    });
-}
-
-// ===== MAPPA PANORAMICA =====
-var mapPan = L.map('mappa-panoramica', {scrollWheelZoom: false}).setView([52,0], 5);
-darkTiles().addTo(mapPan);
-var andata  = [[45.464,9.190],[45.076,6.703],[47.322,5.041],[46.978,4.840],[49.258,4.032],[49.846,3.287],[50.949,1.858],[51.082,1.169],[53.764,-2.699],[55.634,-3.695],[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224]];
-var ritorno = [[57.477,-4.224],[57.322,-4.426],[57.120,-3.670],[56.703,-3.733],[55.953,-3.189],[54.776,-1.576],[53.958,-1.080],[51.126,1.311],[50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358],[47.558,7.587],[46.005,8.952],[45.464,9.190]];
-drawRoute(mapPan, andata,  '#4ea0e6', false);
-drawRoute(mapPan, ritorno, '#f5a742', true);
-var panStops = [{name:'Milano',pos:[45.464,9.190]},{name:'Digione',pos:[47.322,5.041]},{name:'Beaune',pos:[46.978,4.840]},{name:'Reims',pos:[49.258,4.032]},{name:'Calais',pos:[50.949,1.858]},{name:'Glasgow',pos:[55.864,-4.252]},{name:'Loch Lomond',pos:[56.087,-4.590]},{name:'Glencoe',pos:[56.676,-5.100]},{name:'Fort William',pos:[56.820,-5.105]},{name:'Eilean Donan',pos:[57.274,-5.516]},{name:'Skye',pos:[57.413,-6.193]},{name:'Inverness',pos:[57.477,-4.224]},{name:'Edimburgo',pos:[55.953,-3.189]},{name:'York',pos:[53.958,-1.080]},{name:'Strasburgo',pos:[48.574,7.752]},{name:'Colmar',pos:[48.077,7.358]}];
-panStops.forEach(function(c){ L.marker(c.pos).addTo(mapPan).bindPopup('<b>'+c.name+'</b>'); });
-mapPan.fitBounds([[45.0,9.5],[57.6,-6.8]], {padding:[30,30]});
-
-// ===== MAPPE GIORNALIERE =====
-// G1: Milano → Bardonecchia → Digione
-var m1 = makeMap('map-g1',[46.2,7.0],7,[[45.464,9.190],[45.076,6.703],[47.322,5.041]],'#4ea0e6');
-addMarkers(m1,[{pos:[45.464,9.190],name:'Milano',desc:'Partenza'},{pos:[45.076,6.703],name:'Bardonecchia',desc:'Supercharger ⚡'},{pos:[47.322,5.041],name:'Digione',desc:'Arrivo 🍷'}]);
-
-// G2: Digione → Beaune → Reims
-var m2 = makeMap('map-g2',[48.1,4.5],7,[[47.322,5.041],[46.978,4.840],[49.258,4.032]],'#4ea0e6');
-addMarkers(m2,[{pos:[47.322,5.041],name:'Digione',desc:'Partenza'},{pos:[46.978,4.840],name:'Beaune',desc:'Vigneti Borgogna 🍷'},{pos:[49.258,4.032],name:'Reims',desc:'Cattedrale UNESCO 🍾'}]);
-
-// G3: Reims → Calais → Folkestone → Preston
-var m3 = makeMap('map-g3',[51.0,0.5],6,[[49.258,4.032],[50.949,1.858],[51.082,1.169],[53.764,-2.699]],'#4ea0e6');
-addMarkers(m3,[{pos:[49.258,4.032],name:'Reims',desc:'Partenza'},{pos:[50.949,1.858],name:'Calais',desc:'Eurotunnel ⛴️'},{pos:[51.082,1.169],name:'Folkestone',desc:'Arrivo UK 🇬🇧'},{pos:[53.764,-2.699],name:'Preston',desc:'Hotel 🏨'}]);
-
-// G4: Preston → Glasgow
-var m4 = makeMap('map-g4',[54.8,-3.0],7,[[53.764,-2.699],[55.864,-4.252]],'#4ea0e6');
-addMarkers(m4,[{pos:[53.764,-2.699],name:'Preston',desc:'Partenza'},{pos:[55.634,-3.695],name:'Abington',desc:'Supercharger M74 ⚡'},{pos:[55.864,-4.252],name:'Glasgow',desc:'Arrivo 🏴󠁧󠁢󠁳󠁣󠁴󠁿'}]);
-
-// G5: Glasgow → Loch Lomond → Glencoe → Fort William
-var m5 = makeMap('map-g5',[56.3,-4.7],8,[[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105]],'#4ea0e6');
-addMarkers(m5,[{pos:[55.864,-4.252],name:'Glasgow',desc:'Partenza'},{pos:[56.087,-4.590],name:'Loch Lomond',desc:'Il lago più grande del UK 🌊'},{pos:[56.676,-5.100],name:'Glencoe',desc:'Valle iconica 🏔️'},{pos:[56.590,-5.120],name:'Glenfinnan Viaduct',desc:'Viadotto Harry Potter 🪄'},{pos:[56.820,-5.105],name:'Fort William',desc:'Ben Nevis ⛰️'}]);
-
-// G6: Fort William → Eilean Donan → Plockton → Skye
-var m6 = makeMap('map-g6',[57.1,-5.5],8,[[56.820,-5.105],[57.274,-5.516],[57.340,-5.900],[57.250,-5.720],[57.413,-6.193]],'#4ea0e6');
-addMarkers(m6,[{pos:[56.820,-5.105],name:'Fort William',desc:'Partenza'},{pos:[57.274,-5.516],name:'Eilean Donan Castle',desc:'IL castello della Scozia 🏰'},{pos:[57.340,-5.900],name:'Plockton',desc:'Villaggio da cartolina 🌺'},{pos:[57.413,-6.193],name:'Portree — Skye',desc:'Arrivo 🌊'}]);
-
-// G7: Skye loop
-var m7 = makeMap('map-g7',[57.43,-6.3],10,[[57.413,-6.193],[57.250,-6.375],[57.505,-6.185],[57.635,-6.295],[57.421,-6.787],[57.445,-6.578],[57.413,-6.193]],'#f5c842');
-addMarkers(m7,[{pos:[57.413,-6.193],name:'Portree',desc:'Base 🏘️'},{pos:[57.250,-6.375],name:'Fairy Pools',desc:'Cascate 🌊'},{pos:[57.505,-6.185],name:'Old Man of Storr',desc:'Pinnacolo iconico 🗿'},{pos:[57.635,-6.295],name:'Quiraing',desc:'Paesaggio lunare 🌑'},{pos:[57.421,-6.787],name:'Neist Point',desc:'Faro Atlantico 🐋'},{pos:[57.445,-6.578],name:'Dunvegan Castle',desc:'Clan MacLeod 🏰'}]);
-
-// G8: Skye → Inverness
-var m8 = makeMap('map-g8',[57.4,-5.2],8,[[57.413,-6.193],[57.477,-4.224]],'#f5a742');
-addMarkers(m8,[{pos:[57.413,-6.193],name:'Portree — Skye',desc:'Partenza'},{pos:[57.477,-4.224],name:'Inverness',desc:'Castello rosa 🏰'}]);
-
-// G9: Inverness → Loch Ness → Cairngorms → Pitlochry
-var m9 = makeMap('map-g9',[57.0,-4.0],8,[[57.477,-4.224],[57.322,-4.426],[57.120,-3.670],[56.703,-3.733]],'#f5a742');
-addMarkers(m9,[{pos:[57.477,-4.224],name:'Inverness',desc:'Partenza'},{pos:[57.322,-4.426],name:'Loch Ness',desc:'Urquhart Castle 🏰'},{pos:[57.120,-3.670],name:'Cairngorms NP',desc:'Cervi e aquile reali 🦌'},{pos:[56.703,-3.733],name:'Pitlochry',desc:'Whisky 🥃'}]);
-
-// G10: Pitlochry → Edimburgo
-var m10 = makeMap('map-g10',[56.4,-3.5],8,[[56.703,-3.733],[55.953,-3.189]],'#f5a742');
-addMarkers(m10,[{pos:[56.703,-3.733],name:'Pitlochry',desc:'Partenza'},{pos:[56.340,-3.470],name:'Perth',desc:'Supercharger ⚡'},{pos:[55.953,-3.189],name:'Edimburgo',desc:'Castello 🏯'}]);
-
-// G11: Edimburgo (giornata intera)
-var m11 = makeMap('map-g11',[55.950,-3.190],14,[],'#4ea0e6');
-addMarkers(m11,[{pos:[55.953,-3.189],name:'Castello di Edimburgo',desc:'UNESCO 🏯'},{pos:[55.952,-3.180],name:'Royal Mile',desc:'Strada storica'},{pos:[55.952,-3.174],name:'Palace of Holyroodhouse',desc:'Residenza reale 👑'},{pos:[55.947,-3.200],name:'Greyfriars Kirkyard',desc:'Cimitero Harry Potter ⚡'},{pos:[55.966,-3.218],name:'Calton Hill',desc:'Vista panoramica 🌅'},{pos:[55.963,-3.211],name:'Arthur\'s Seat',desc:'Vulcano estinto 🌋'}]);
-
-// G12: Edimburgo → York → Dover → Calais
-var m12 = makeMap('map-g12',[52.5,-1.0],5,[[55.953,-3.189],[53.958,-1.080],[51.127,1.311],[50.949,1.858]],'#f5a742');
-addMarkers(m12,[{pos:[55.953,-3.189],name:'Edimburgo',desc:'Partenza'},{pos:[53.958,-1.080],name:'York',desc:'Minster ⚔️'},{pos:[51.127,1.311],name:'Dover',desc:'White Cliffs + traghetto ⛴️'},{pos:[50.949,1.858],name:'Calais',desc:'Arrivo in Francia 🥖'}]);
-
-// G13: Calais → Reims → Strasburgo → Colmar
-var m13 = makeMap('map-g13',[49.5,4.5],7,[[50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358]],'#4ea0e6');
-addMarkers(m13,[{pos:[50.949,1.858],name:'Calais',desc:'Partenza'},{pos:[49.258,4.032],name:'Reims',desc:'Supercharger ⚡'},{pos:[48.574,7.752],name:'Strasburgo',desc:'Petite France 🥨'},{pos:[48.077,7.358],name:'Colmar',desc:'Alsazia da cartolina 🍷'}]);
-
-// G14: Colmar → Basilea → Lugano → Milano
-var m14 = makeMap('map-g14',[47.0,8.0],7,[[48.077,7.358],[47.558,7.587],[46.005,8.952],[45.464,9.190]],'#4ea0e6');
-addMarkers(m14,[{pos:[48.077,7.358],name:'Colmar',desc:'Partenza'},{pos:[47.558,7.587],name:'Basilea',desc:'Reno 🇨🇭'},{pos:[46.005,8.952],name:'Lugano',desc:'Lago 🏔️'},{pos:[45.464,9.190],name:'Milano',desc:'🏠 Casa!'}]);
-
-
-// ===== DAY NAVIGATION =====
-var currentDay = 1;
-var totalDays = 14;
-var dayTitles = ['Giorno 1 — Milano → Digione', 'Giorno 2 — Digione → Reims', 'Giorno 3 — Reims → Preston', 'Giorno 4 — Preston → Glasgow', 'Giorno 5 — Glasgow → Fort William', 'Giorno 6 — Fort William → Skye', "Giorno 7 — Skye (giro dell'isola)", 'Giorno 8 — Skye → Inverness', 'Giorno 9 — Inverness → Pitlochry', 'Giorno 10 — Pitlochry → Edimburgo', 'Giorno 11 — Edimburgo (giornata intera)', 'Giorno 12 — Edimburgo → Calais', 'Giorno 13 — Calais → Colmar', 'Giorno 14 — Colmar → Milano'];
-
-function showDay(n) {
-  // Hide current
-  var current = document.getElementById('giorno' + currentDay);
-  if (current) current.classList.remove('active');
-  
-  currentDay = n;
-  
-  // Show new
-  var next = document.getElementById('giorno' + currentDay);
-  if (next) {
-    next.classList.add('active');
-    // Scroll to nav
-    document.getElementById('daysNav').scrollIntoView({behavior: 'smooth', block: 'start'});
-  }
-  
-  // Update label
-  document.getElementById('dayNavLabel').textContent = dayTitles[currentDay - 1];
-  
-  // Update arrow states
-  document.getElementById('prevDay').classList.toggle('disabled', currentDay === 1);
-  document.getElementById('nextDay').classList.toggle('disabled', currentDay === totalDays);
-  
-  // Invalidate map size after transition
-  var maps = [null, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
-  setTimeout(function() {
-    if (maps[currentDay]) maps[currentDay].invalidateSize();
-  }, 150);
-}
-
-function changeDay(delta) {
-  var newDay = currentDay + delta;
-  if (newDay < 1 || newDay > totalDays) return;
-  showDay(newDay);
-}
-
-// Init: show day 1
-document.getElementById('giorno1').classList.add('active');
-
 </script>
 
 <button class="pdf-btn" onclick="printPage()">
-  ⬇️ Scarica PDF
+  &#x2B07;&#xFE0F; Scarica PDF
 </button>
 <script>
 function printPage() {
-  // Show all days before printing
   var sections = document.querySelectorAll('.day-section');
   sections.forEach(function(s){ s.style.display = 'block'; });
   window.print();
-  // Restore after print
   setTimeout(function(){
     sections.forEach(function(s){ s.style.display = ''; });
-    document.getElementById('giorno' + currentDay).classList.add('active');
-  }, 1000);
+    var cur = document.querySelector('.day-section.active');
+    if (!cur) { sections[0].style.display = 'block'; }
+  }, 1500);
 }
 </script>
 
