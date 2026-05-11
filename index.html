@@ -1334,8 +1334,8 @@ var ritorno = [
   [50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358],
   [47.558,7.587],[46.005,8.952],[45.464,9.190]
 ];
-L.polyline(andata, {color:'#4ea0e6', weight:3, opacity:0.9}).addTo(mapPan);
-L.polyline(ritorno, {color:'#f5a742', weight:3, opacity:0.9, dashArray:'8,6'}).addTo(mapPan);
+drawPanRoute(mapPan, andata, '#4ea0e6', false);
+drawPanRoute(mapPan, ritorno, '#f5a742', true);
 
 var cities = [
   {name:'Milano 🏙️', pos:[45.464,9.190]},
@@ -1559,7 +1559,22 @@ function makeMap(id, center, zoom, waypoints, color) {
   var m = L.map(id, {scrollWheelZoom: false}).setView(center, zoom);
   darkTiles().addTo(m);
   if (waypoints && waypoints.length > 1) {
-    L.polyline(waypoints, {color: color || '#4ea0e6', weight: 4, opacity: 0.9}).addTo(m);
+    // Fetch real road route from OSRM
+    var coords = waypoints.map(function(p) { return p[1] + ',' + p[0]; }).join(';');
+    var url = 'https://router.project-osrm.org/route/v1/driving/' + coords + '?overview=full&geometries=geojson';
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.routes && data.routes[0]) {
+          L.geoJSON(data.routes[0].geometry, {
+            style: {color: color || '#4ea0e6', weight: 4, opacity: 0.9}
+          }).addTo(m);
+        }
+      })
+      .catch(function() {
+        // Fallback: draw straight line
+        L.polyline(waypoints, {color: color || '#4ea0e6', weight: 4, opacity: 0.9, dashArray: '6,4'}).addTo(m);
+      });
   }
   return m;
 }
@@ -1576,13 +1591,33 @@ function addMarkers(m, points) {
   }
 }
 
+// Panoramic map: fetch full route
+function drawPanRoute(m, waypoints, color, dashed) {
+  var coords = waypoints.map(function(p) { return p[1] + ',' + p[0]; }).join(';');
+  var url = 'https://router.project-osrm.org/route/v1/driving/' + coords + '?overview=full&geometries=geojson';
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.routes && data.routes[0]) {
+        var style = {color: color, weight: 3, opacity: 0.9};
+        if (dashed) style.dashArray = '8,6';
+        L.geoJSON(data.routes[0].geometry, {style: style}).addTo(m);
+      }
+    })
+    .catch(function() {
+      var style = {color: color, weight: 3, opacity: 0.9};
+      if (dashed) style.dashArray = '8,6';
+      L.polyline(waypoints, style).addTo(m);
+    });
+}
+
 // ===== MAPPA PANORAMICA =====
 var mapPan = L.map('mappa-panoramica', {scrollWheelZoom: false}).setView([52, 0], 5);
 darkTiles().addTo(mapPan);
 var andata = [[45.464,9.190],[45.076,6.703],[47.322,5.041],[46.978,4.840],[49.258,4.032],[49.846,3.287],[50.949,1.858],[51.082,1.169],[53.764,-2.699],[55.634,-3.695],[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224]];
 var ritorno = [[57.477,-4.224],[57.322,-4.426],[57.120,-3.670],[56.703,-3.733],[55.953,-3.189],[54.776,-1.576],[53.958,-1.080],[51.126,1.311],[50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358],[47.558,7.587],[46.005,8.952],[45.464,9.190]];
-L.polyline(andata, {color:'#4ea0e6', weight:3, opacity:0.9}).addTo(mapPan);
-L.polyline(ritorno, {color:'#f5a742', weight:3, opacity:0.9, dashArray:'8,6'}).addTo(mapPan);
+drawPanRoute(mapPan, andata, '#4ea0e6', false);
+drawPanRoute(mapPan, ritorno, '#f5a742', true);
 [{name:'Milano',pos:[45.464,9.190]},{name:'Glasgow',pos:[55.864,-4.252]},{name:'Loch Lomond',pos:[56.087,-4.590]},{name:'Glencoe',pos:[56.676,-5.100]},{name:'Fort William',pos:[56.820,-5.105]},{name:'Eilean Donan',pos:[57.274,-5.516]},{name:'Skye',pos:[57.413,-6.193]},{name:'Inverness',pos:[57.477,-4.224]},{name:'Edimburgo',pos:[55.953,-3.189]},{name:'York',pos:[53.958,-1.080]},{name:'Strasburgo',pos:[48.574,7.752]},{name:'Colmar',pos:[48.077,7.358]}].forEach(function(c){L.marker(c.pos).addTo(mapPan).bindPopup('<b>'+c.name+'</b>');});
 var panPoints = [[45.464,9.190],[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224],[55.953,-3.189],[53.958,-1.080],[48.574,7.752],[48.077,7.358]];
 mapPan.fitBounds(panPoints, {padding: [30, 30]});
