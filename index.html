@@ -206,6 +206,55 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 /* ===== FOOTER ===== */
 footer { text-align: center; padding: 40px 16px; font-size: 13px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.07); }
 footer strong { color: var(--gold); }
+
+/* ===== DAY NAVIGATION ARROWS ===== */
+.days-wrapper {
+  position: relative;
+}
+.days-nav {
+  position: sticky;
+  top: 70px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(13,27,42,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(78,160,230,0.15);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.days-nav .day-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gold);
+  min-width: 200px;
+  text-align: center;
+}
+.nav-arrow {
+  background: var(--card);
+  border: 1px solid rgba(78,160,230,0.3);
+  color: var(--blue);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: background 0.2s, transform 0.1s;
+  user-select: none;
+  flex-shrink: 0;
+}
+.nav-arrow:hover { background: var(--card2); transform: scale(1.08); }
+.nav-arrow:active { transform: scale(0.95); }
+.nav-arrow.disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+.day-section { display: none; }
+.day-section.active { display: block; }
+
 </style>
 </head>
 <body>
@@ -274,6 +323,11 @@ footer strong { color: var(--gold); }
 </div>
 <div class="route-divider"><span>✦ ANDATA ✦</span></div>
 
+<div class="days-nav" id="daysNav">
+  <button class="nav-arrow disabled" id="prevDay" onclick="changeDay(-1)">&#8592;</button>
+  <span class="day-label" id="dayNavLabel">Giorno 1 — Milano → Digione</span>
+  <button class="nav-arrow" id="nextDay" onclick="changeDay(1)">&#8594;</button>
+</div>
 <!-- ===== GIORNO 1 ===== -->
 <section class="day-section" id="giorno1">
   <div class="day-header">
@@ -1513,38 +1567,11 @@ addMarkers(m14, [
 ]);
 
 
-  // Force all maps to recalculate size
-  var allMaps = [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
-  allMaps.forEach(function(m) {
-    if (m) {
-      m.invalidateSize();
-    }
-  });
-}
 
-    // Force all maps to recalculate size
-    var allMaps = [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
-    allMaps.forEach(function(m) {
-      if (m) m.invalidateSize();
-    });
-
-  // Force redraw
-  [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14].forEach(function(m) {
-    if (m) m.invalidateSize();
-  });
-
-// Force redraw after a tick
-[mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14].forEach(function(m) {
-    if (m) m.invalidateSize();
-  });
-</script>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 
 // ===== LEAFLET MAP INIT =====
-// Runs synchronously after Leaflet JS loads
 
 function darkTiles() {
   return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1559,21 +1586,16 @@ function makeMap(id, center, zoom, waypoints, color) {
   var m = L.map(id, {scrollWheelZoom: false}).setView(center, zoom);
   darkTiles().addTo(m);
   if (waypoints && waypoints.length > 1) {
-    // Fetch real road route from OSRM
-    var coords = waypoints.map(function(p) { return p[1] + ',' + p[0]; }).join(';');
-    var url = 'https://router.project-osrm.org/route/v1/driving/' + coords + '?overview=full&geometries=geojson';
-    fetch(url)
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.routes && data.routes[0]) {
-          L.geoJSON(data.routes[0].geometry, {
-            style: {color: color || '#4ea0e6', weight: 4, opacity: 0.9}
-          }).addTo(m);
+    var coords = waypoints.map(function(p){ return p[1]+','+p[0]; }).join(';');
+    fetch('https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d.routes && d.routes[0]){
+          L.geoJSON(d.routes[0].geometry,{style:{color:color||'#4ea0e6',weight:4,opacity:0.9}}).addTo(m);
         }
       })
-      .catch(function() {
-        // Fallback: draw straight line
-        L.polyline(waypoints, {color: color || '#4ea0e6', weight: 4, opacity: 0.9, dashArray: '6,4'}).addTo(m);
+      .catch(function(){
+        L.polyline(waypoints,{color:color||'#4ea0e6',weight:4,opacity:0.9,dashArray:'6,4'}).addTo(m);
       });
   }
   return m;
@@ -1582,88 +1604,142 @@ function makeMap(id, center, zoom, waypoints, color) {
 function addMarkers(m, points) {
   if (!m) return;
   var bounds = [];
-  points.forEach(function(p) {
-    L.marker(p.pos).addTo(m).bindPopup('<b>' + p.name + '</b>' + (p.desc ? '<br>' + p.desc : ''));
+  points.forEach(function(p){
+    L.marker(p.pos).addTo(m).bindPopup('<b>'+p.name+'</b>'+(p.desc?'<br>'+p.desc:''));
     bounds.push(p.pos);
   });
-  if (bounds.length > 0) {
-    m.fitBounds(bounds, {padding: [40, 40], maxZoom: 12});
-  }
+  if (bounds.length > 0) m.fitBounds(bounds, {padding:[40,40], maxZoom:12});
 }
 
-// Panoramic map: fetch full route
-function drawPanRoute(m, waypoints, color, dashed) {
-  var coords = waypoints.map(function(p) { return p[1] + ',' + p[0]; }).join(';');
-  var url = 'https://router.project-osrm.org/route/v1/driving/' + coords + '?overview=full&geometries=geojson';
-  fetch(url)
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.routes && data.routes[0]) {
-        var style = {color: color, weight: 3, opacity: 0.9};
-        if (dashed) style.dashArray = '8,6';
-        L.geoJSON(data.routes[0].geometry, {style: style}).addTo(m);
+function drawRoute(m, waypoints, color, dashed) {
+  var coords = waypoints.map(function(p){ return p[1]+','+p[0]; }).join(';');
+  fetch('https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(d.routes && d.routes[0]){
+        var style = {color:color, weight:3, opacity:0.9};
+        if(dashed) style.dashArray='8,6';
+        L.geoJSON(d.routes[0].geometry,{style:style}).addTo(m);
       }
     })
-    .catch(function() {
-      var style = {color: color, weight: 3, opacity: 0.9};
-      if (dashed) style.dashArray = '8,6';
-      L.polyline(waypoints, style).addTo(m);
+    .catch(function(){
+      var style = {color:color, weight:3, opacity:0.9};
+      if(dashed) style.dashArray='8,6';
+      L.polyline(waypoints,style).addTo(m);
     });
 }
 
 // ===== MAPPA PANORAMICA =====
-var mapPan = L.map('mappa-panoramica', {scrollWheelZoom: false}).setView([52, 0], 5);
+var mapPan = L.map('mappa-panoramica', {scrollWheelZoom: false}).setView([52,0], 5);
 darkTiles().addTo(mapPan);
-var andata = [[45.464,9.190],[45.076,6.703],[47.322,5.041],[46.978,4.840],[49.258,4.032],[49.846,3.287],[50.949,1.858],[51.082,1.169],[53.764,-2.699],[55.634,-3.695],[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224]];
+var andata  = [[45.464,9.190],[45.076,6.703],[47.322,5.041],[46.978,4.840],[49.258,4.032],[49.846,3.287],[50.949,1.858],[51.082,1.169],[53.764,-2.699],[55.634,-3.695],[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224]];
 var ritorno = [[57.477,-4.224],[57.322,-4.426],[57.120,-3.670],[56.703,-3.733],[55.953,-3.189],[54.776,-1.576],[53.958,-1.080],[51.126,1.311],[50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358],[47.558,7.587],[46.005,8.952],[45.464,9.190]];
-drawPanRoute(mapPan, andata, '#4ea0e6', false);
-drawPanRoute(mapPan, ritorno, '#f5a742', true);
-[{name:'Milano',pos:[45.464,9.190]},{name:'Glasgow',pos:[55.864,-4.252]},{name:'Loch Lomond',pos:[56.087,-4.590]},{name:'Glencoe',pos:[56.676,-5.100]},{name:'Fort William',pos:[56.820,-5.105]},{name:'Eilean Donan',pos:[57.274,-5.516]},{name:'Skye',pos:[57.413,-6.193]},{name:'Inverness',pos:[57.477,-4.224]},{name:'Edimburgo',pos:[55.953,-3.189]},{name:'York',pos:[53.958,-1.080]},{name:'Strasburgo',pos:[48.574,7.752]},{name:'Colmar',pos:[48.077,7.358]}].forEach(function(c){L.marker(c.pos).addTo(mapPan).bindPopup('<b>'+c.name+'</b>');});
-var panPoints = [[45.464,9.190],[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224],[55.953,-3.189],[53.958,-1.080],[48.574,7.752],[48.077,7.358]];
-mapPan.fitBounds(panPoints, {padding: [30, 30]});
+drawRoute(mapPan, andata,  '#4ea0e6', false);
+drawRoute(mapPan, ritorno, '#f5a742', true);
+var panStops = [{name:'Milano',pos:[45.464,9.190]},{name:'Digione',pos:[47.322,5.041]},{name:'Beaune',pos:[46.978,4.840]},{name:'Reims',pos:[49.258,4.032]},{name:'Calais',pos:[50.949,1.858]},{name:'Glasgow',pos:[55.864,-4.252]},{name:'Loch Lomond',pos:[56.087,-4.590]},{name:'Glencoe',pos:[56.676,-5.100]},{name:'Fort William',pos:[56.820,-5.105]},{name:'Eilean Donan',pos:[57.274,-5.516]},{name:'Skye',pos:[57.413,-6.193]},{name:'Inverness',pos:[57.477,-4.224]},{name:'Edimburgo',pos:[55.953,-3.189]},{name:'York',pos:[53.958,-1.080]},{name:'Strasburgo',pos:[48.574,7.752]},{name:'Colmar',pos:[48.077,7.358]}];
+panStops.forEach(function(c){ L.marker(c.pos).addTo(mapPan).bindPopup('<b>'+c.name+'</b>'); });
+mapPan.fitBounds([[45.0,9.5],[57.6,-6.8]], {padding:[30,30]});
 
 // ===== MAPPE GIORNALIERE =====
-var m1 = makeMap('map-g1', [46.5,7.5], 7, [[45.464,9.190],[45.076,6.703],[47.322,5.041]], '#4ea0e6');
-addMarkers(m1, [{pos:[45.464,9.190],name:'Milano',desc:'Partenza'},{pos:[45.076,6.703],name:'Bardonecchia',desc:'Supercharger ⚡'},{pos:[47.322,5.041],name:'Digione',desc:'Arrivo 🍷'}]);
+// G1: Milano → Bardonecchia → Digione
+var m1 = makeMap('map-g1',[46.2,7.0],7,[[45.464,9.190],[45.076,6.703],[47.322,5.041]],'#4ea0e6');
+addMarkers(m1,[{pos:[45.464,9.190],name:'Milano',desc:'Partenza'},{pos:[45.076,6.703],name:'Bardonecchia',desc:'Supercharger ⚡'},{pos:[47.322,5.041],name:'Digione',desc:'Arrivo 🍷'}]);
 
-var m2 = makeMap('map-g2', [47.2,5.0], 8, [[47.322,5.041],[46.978,4.840],[49.258,4.032]], '#4ea0e6');
-addMarkers(m2, [{pos:[47.322,5.041],name:'Digione',desc:'Partenza'},{pos:[46.978,4.840],name:'Beaune',desc:'Vigneti Borgogna 🍷'},{pos:[49.258,4.032],name:'Reims',desc:'Cattedrale + Champagne 🍾'}]);
+// G2: Digione → Beaune → Reims
+var m2 = makeMap('map-g2',[48.1,4.5],7,[[47.322,5.041],[46.978,4.840],[49.258,4.032]],'#4ea0e6');
+addMarkers(m2,[{pos:[47.322,5.041],name:'Digione',desc:'Partenza'},{pos:[46.978,4.840],name:'Beaune',desc:'Vigneti Borgogna 🍷'},{pos:[49.258,4.032],name:'Reims',desc:'Cattedrale UNESCO 🍾'}]);
 
-var m3 = makeMap('map-g3', [50.5,2.0], 7, [[49.258,4.032],[49.846,3.287],[50.949,1.858],[51.082,1.169]], '#4ea0e6');
-addMarkers(m3, [{pos:[49.258,4.032],name:'Reims',desc:'Partenza'},{pos:[50.949,1.858],name:'Calais',desc:'Porto ⛴️'},{pos:[51.082,1.169],name:'Dover',desc:'White Cliffs 🇬🇧'}]);
+// G3: Reims → Calais → Folkestone → Preston
+var m3 = makeMap('map-g3',[51.0,0.5],6,[[49.258,4.032],[50.949,1.858],[51.082,1.169],[53.764,-2.699]],'#4ea0e6');
+addMarkers(m3,[{pos:[49.258,4.032],name:'Reims',desc:'Partenza'},{pos:[50.949,1.858],name:'Calais',desc:'Eurotunnel ⛴️'},{pos:[51.082,1.169],name:'Folkestone',desc:'Arrivo UK 🇬🇧'},{pos:[53.764,-2.699],name:'Preston',desc:'Hotel 🏨'}]);
 
-var m4 = makeMap('map-g4', [54.0,-2.0], 6, [[51.082,1.169],[53.764,-2.699],[55.634,-3.695],[55.864,-4.252]], '#4ea0e6');
-addMarkers(m4, [{pos:[51.082,1.169],name:'Dover',desc:'Partenza'},{pos:[53.764,-2.699],name:'Manchester',desc:'Sosta'},{pos:[55.864,-4.252],name:'Glasgow',desc:'Arrivo 🏴󠁧󠁢󠁳󠁣󠁴󠁿'}]);
+// G4: Preston → Glasgow
+var m4 = makeMap('map-g4',[54.8,-3.0],7,[[53.764,-2.699],[55.864,-4.252]],'#4ea0e6');
+addMarkers(m4,[{pos:[53.764,-2.699],name:'Preston',desc:'Partenza'},{pos:[55.634,-3.695],name:'Abington',desc:'Supercharger M74 ⚡'},{pos:[55.864,-4.252],name:'Glasgow',desc:'Arrivo 🏴󠁧󠁢󠁳󠁣󠁴󠁿'}]);
 
-var m5 = makeMap('map-g5', [56.2,-4.5], 9, [[55.864,-4.252],[56.087,-4.590],[56.676,-5.100]], '#4ea0e6');
-addMarkers(m5, [{pos:[55.864,-4.252],name:'Glasgow',desc:'Partenza'},{pos:[56.087,-4.590],name:'Loch Lomond',desc:'Primo loch 🏞️'},{pos:[56.676,-5.100],name:'Glencoe',desc:'Valle iconica 🏔️'}]);
+// G5: Glasgow → Loch Lomond → Glencoe → Fort William
+var m5 = makeMap('map-g5',[56.3,-4.7],8,[[55.864,-4.252],[56.087,-4.590],[56.676,-5.100],[56.820,-5.105]],'#4ea0e6');
+addMarkers(m5,[{pos:[55.864,-4.252],name:'Glasgow',desc:'Partenza'},{pos:[56.087,-4.590],name:'Loch Lomond',desc:'Il lago più grande del UK 🌊'},{pos:[56.676,-5.100],name:'Glencoe',desc:'Valle iconica 🏔️'},{pos:[56.590,-5.120],name:'Glenfinnan Viaduct',desc:'Viadotto Harry Potter 🪄'},{pos:[56.820,-5.105],name:'Fort William',desc:'Ben Nevis ⛰️'}]);
 
-var m6 = makeMap('map-g6', [56.9,-5.1], 9, [[56.676,-5.100],[56.820,-5.105],[57.274,-5.516]], '#4ea0e6');
-addMarkers(m6, [{pos:[56.676,-5.100],name:'Glencoe',desc:'Partenza'},{pos:[56.820,-5.105],name:'Fort William',desc:'Ben Nevis ⛰️'},{pos:[57.274,-5.516],name:'Eilean Donan',desc:'Castello 🏰'}]);
+// G6: Fort William → Eilean Donan → Plockton → Skye
+var m6 = makeMap('map-g6',[57.1,-5.5],8,[[56.820,-5.105],[57.274,-5.516],[57.340,-5.900],[57.250,-5.720],[57.413,-6.193]],'#4ea0e6');
+addMarkers(m6,[{pos:[56.820,-5.105],name:'Fort William',desc:'Partenza'},{pos:[57.274,-5.516],name:'Eilean Donan Castle',desc:'IL castello della Scozia 🏰'},{pos:[57.340,-5.900],name:'Plockton',desc:'Villaggio da cartolina 🌺'},{pos:[57.413,-6.193],name:'Portree — Skye',desc:'Arrivo 🌊'}]);
 
-var m7 = makeMap('map-g7', [57.35,-5.8], 10, [[57.274,-5.516],[57.413,-6.193]], '#4ea0e6');
-addMarkers(m7, [{pos:[57.274,-5.516],name:'Eilean Donan',desc:'Partenza'},{pos:[57.413,-6.193],name:'Isola di Skye',desc:'Fairy Pools 🌊'}]);
+// G7: Skye loop
+var m7 = makeMap('map-g7',[57.43,-6.3],10,[[57.413,-6.193],[57.250,-6.375],[57.505,-6.185],[57.635,-6.295],[57.421,-6.787],[57.445,-6.578],[57.413,-6.193]],'#f5c842');
+addMarkers(m7,[{pos:[57.413,-6.193],name:'Portree',desc:'Base 🏘️'},{pos:[57.250,-6.375],name:'Fairy Pools',desc:'Cascate 🌊'},{pos:[57.505,-6.185],name:'Old Man of Storr',desc:'Pinnacolo iconico 🗿'},{pos:[57.635,-6.295],name:'Quiraing',desc:'Paesaggio lunare 🌑'},{pos:[57.421,-6.787],name:'Neist Point',desc:'Faro Atlantico 🐋'},{pos:[57.445,-6.578],name:'Dunvegan Castle',desc:'Clan MacLeod 🏰'}]);
 
-var m8 = makeMap('map-g8', [57.35,-5.2], 9, [[57.413,-6.193],[57.477,-4.224]], '#4ea0e6');
-addMarkers(m8, [{pos:[57.413,-6.193],name:'Skye',desc:'Partenza'},{pos:[57.477,-4.224],name:'Inverness',desc:'Loch Ness 👁️'}]);
+// G8: Skye → Inverness
+var m8 = makeMap('map-g8',[57.4,-5.2],8,[[57.413,-6.193],[57.477,-4.224]],'#f5a742');
+addMarkers(m8,[{pos:[57.413,-6.193],name:'Portree — Skye',desc:'Partenza'},{pos:[57.477,-4.224],name:'Inverness',desc:'Castello rosa 🏰'}]);
 
-var m9 = makeMap('map-g9', [57.2,-3.8], 9, [[57.477,-4.224],[57.120,-3.670],[56.703,-3.733]], '#4ea0e6');
-addMarkers(m9, [{pos:[57.477,-4.224],name:'Inverness',desc:'Partenza'},{pos:[57.120,-3.670],name:'Aviemore',desc:'Cairngorms ⛷️'},{pos:[56.703,-3.733],name:'Pitlochry',desc:'Whisky 🥃'}]);
+// G9: Inverness → Loch Ness → Cairngorms → Pitlochry
+var m9 = makeMap('map-g9',[57.0,-4.0],8,[[57.477,-4.224],[57.322,-4.426],[57.120,-3.670],[56.703,-3.733]],'#f5a742');
+addMarkers(m9,[{pos:[57.477,-4.224],name:'Inverness',desc:'Partenza'},{pos:[57.322,-4.426],name:'Loch Ness',desc:'Urquhart Castle 🏰'},{pos:[57.120,-3.670],name:'Cairngorms NP',desc:'Cervi e aquile reali 🦌'},{pos:[56.703,-3.733],name:'Pitlochry',desc:'Whisky 🥃'}]);
 
-var m10 = makeMap('map-g10', [56.4,-3.5], 8, [[56.703,-3.733],[55.953,-3.189]], '#4ea0e6');
-addMarkers(m10, [{pos:[56.703,-3.733],name:'Pitlochry',desc:'Partenza'},{pos:[55.953,-3.189],name:'Edimburgo',desc:'Castello 🏯'}]);
+// G10: Pitlochry → Edimburgo
+var m10 = makeMap('map-g10',[56.4,-3.5],8,[[56.703,-3.733],[55.953,-3.189]],'#f5a742');
+addMarkers(m10,[{pos:[56.703,-3.733],name:'Pitlochry',desc:'Partenza'},{pos:[56.340,-3.470],name:'Perth',desc:'Supercharger ⚡'},{pos:[55.953,-3.189],name:'Edimburgo',desc:'Castello 🏯'}]);
 
-var m11 = makeMap('map-g11', [55.95,-3.2], 12, [[55.953,-3.189]], '#4ea0e6');
-addMarkers(m11, [{pos:[55.953,-3.189],name:'Edimburgo',desc:'Giornata intera 🏯'},{pos:[55.946,-3.200],name:'Royal Mile',desc:'Centro storico'},{pos:[55.952,-3.196],name:'Castello di Edimburgo',desc:'UNESCO'}]);
+// G11: Edimburgo (giornata intera)
+var m11 = makeMap('map-g11',[55.950,-3.190],14,[],'#4ea0e6');
+addMarkers(m11,[{pos:[55.953,-3.189],name:'Castello di Edimburgo',desc:'UNESCO 🏯'},{pos:[55.952,-3.180],name:'Royal Mile',desc:'Strada storica'},{pos:[55.952,-3.174],name:'Palace of Holyroodhouse',desc:'Residenza reale 👑'},{pos:[55.947,-3.200],name:'Greyfriars Kirkyard',desc:'Cimitero Harry Potter ⚡'},{pos:[55.966,-3.218],name:'Calton Hill',desc:'Vista panoramica 🌅'},{pos:[55.963,-3.211],name:'Arthur\'s Seat',desc:'Vulcano estinto 🌋'}]);
 
-var m12 = makeMap('map-g12', [52.5,-0.5], 6, [[55.953,-3.189],[54.776,-1.576],[53.958,-1.080],[51.126,1.311],[50.949,1.858]], '#f5a742');
-addMarkers(m12, [{pos:[55.953,-3.189],name:'Edimburgo',desc:'Partenza'},{pos:[53.958,-1.080],name:'York',desc:'Minster ⚔️'},{pos:[51.126,1.311],name:'Dover',desc:'Imbarco ⛴️'},{pos:[50.949,1.858],name:'Calais',desc:'Francia 🥖'}]);
+// G12: Edimburgo → York → Dover → Calais
+var m12 = makeMap('map-g12',[52.5,-1.0],5,[[55.953,-3.189],[53.958,-1.080],[51.127,1.311],[50.949,1.858]],'#f5a742');
+addMarkers(m12,[{pos:[55.953,-3.189],name:'Edimburgo',desc:'Partenza'},{pos:[53.958,-1.080],name:'York',desc:'Minster ⚔️'},{pos:[51.127,1.311],name:'Dover',desc:'White Cliffs + traghetto ⛴️'},{pos:[50.949,1.858],name:'Calais',desc:'Arrivo in Francia 🥖'}]);
 
-var m13 = makeMap('map-g13', [49.5,5.0], 7, [[50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358]], '#4ea0e6');
-addMarkers(m13, [{pos:[50.949,1.858],name:'Calais',desc:'Partenza'},{pos:[49.258,4.032],name:'Reims',desc:'Supercharger ⚡'},{pos:[48.574,7.752],name:'Strasburgo',desc:'Petite France 🥨'},{pos:[48.077,7.358],name:'Colmar',desc:'Alsazia da cartolina 🍷'}]);
+// G13: Calais → Reims → Strasburgo → Colmar
+var m13 = makeMap('map-g13',[49.5,4.5],7,[[50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358]],'#4ea0e6');
+addMarkers(m13,[{pos:[50.949,1.858],name:'Calais',desc:'Partenza'},{pos:[49.258,4.032],name:'Reims',desc:'Supercharger ⚡'},{pos:[48.574,7.752],name:'Strasburgo',desc:'Petite France 🥨'},{pos:[48.077,7.358],name:'Colmar',desc:'Alsazia da cartolina 🍷'}]);
 
-var m14 = makeMap('map-g14', [47.0,8.0], 7, [[48.574,7.752],[47.558,7.587],[46.005,8.952],[45.464,9.190]], '#4ea0e6');
-addMarkers(m14, [{pos:[48.574,7.752],name:'Strasburgo',desc:'Partenza'},{pos:[47.558,7.587],name:'Basilea',desc:'Sul Reno 🇨🇭'},{pos:[46.005,8.952],name:'Lugano',desc:'Lago 🏔️'},{pos:[45.464,9.190],name:'Milano',desc:'🏠 Casa!'}]);
+// G14: Colmar → Basilea → Lugano → Milano
+var m14 = makeMap('map-g14',[47.0,8.0],7,[[48.077,7.358],[47.558,7.587],[46.005,8.952],[45.464,9.190]],'#4ea0e6');
+addMarkers(m14,[{pos:[48.077,7.358],name:'Colmar',desc:'Partenza'},{pos:[47.558,7.587],name:'Basilea',desc:'Reno 🇨🇭'},{pos:[46.005,8.952],name:'Lugano',desc:'Lago 🏔️'},{pos:[45.464,9.190],name:'Milano',desc:'🏠 Casa!'}]);
+
+
+// ===== DAY NAVIGATION =====
+var currentDay = 1;
+var totalDays = 14;
+var dayTitles = ['Giorno 1 — Milano → Digione', 'Giorno 2 — Digione → Reims', 'Giorno 3 — Reims → Preston', 'Giorno 4 — Preston → Glasgow', 'Giorno 5 — Glasgow → Fort William', 'Giorno 6 — Fort William → Skye', "Giorno 7 — Skye (giro dell'isola)", 'Giorno 8 — Skye → Inverness', 'Giorno 9 — Inverness → Pitlochry', 'Giorno 10 — Pitlochry → Edimburgo', 'Giorno 11 — Edimburgo (giornata intera)', 'Giorno 12 — Edimburgo → Calais', 'Giorno 13 — Calais → Colmar', 'Giorno 14 — Colmar → Milano'];
+
+function showDay(n) {
+  // Hide current
+  var current = document.getElementById('giorno' + currentDay);
+  if (current) current.classList.remove('active');
+  
+  currentDay = n;
+  
+  // Show new
+  var next = document.getElementById('giorno' + currentDay);
+  if (next) {
+    next.classList.add('active');
+    // Scroll to nav
+    document.getElementById('daysNav').scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+  
+  // Update label
+  document.getElementById('dayNavLabel').textContent = dayTitles[currentDay - 1];
+  
+  // Update arrow states
+  document.getElementById('prevDay').classList.toggle('disabled', currentDay === 1);
+  document.getElementById('nextDay').classList.toggle('disabled', currentDay === totalDays);
+  
+  // Invalidate map size after transition
+  var maps = [null, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
+  setTimeout(function() {
+    if (maps[currentDay]) maps[currentDay].invalidateSize();
+  }, 150);
+}
+
+function changeDay(delta) {
+  var newDay = currentDay + delta;
+  if (newDay < 1 || newDay > totalDays) return;
+  showDay(newDay);
+}
+
+// Init: show day 1
+document.getElementById('giorno1').classList.add('active');
 
 </script>
 </body>
