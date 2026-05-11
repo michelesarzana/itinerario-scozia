@@ -1310,7 +1310,6 @@ function closeLightbox() {
 document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeLightbox(); });
 </script>
 <script>
-setTimeout(function() {
 // Dark tile layer factory
 function darkTiles() {
   return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1320,16 +1319,16 @@ function darkTiles() {
 }
 
 // ===== MAPPA PANORAMICA =====
-const mapPan = L.map('mappa-panoramica').setView([52, 0], 5);
+var mapPan = L.map('mappa-panoramica').setView([52, 0], 5);
 darkTiles().addTo(mapPan);
 
-const andata = [
+var andata = [
   [45.464,9.190],[45.076,6.703],[47.322,5.041],[46.978,4.840],
   [49.258,4.032],[49.846,3.287],[50.949,1.858],[51.082,1.169],
   [53.764,-2.699],[55.634,-3.695],[55.864,-4.252],[56.087,-4.590],
   [56.676,-5.100],[56.820,-5.105],[57.274,-5.516],[57.413,-6.193],[57.477,-4.224]
 ];
-const ritorno = [
+var ritorno = [
   [57.477,-4.224],[57.322,-4.426],[57.120,-3.670],[56.703,-3.733],
   [55.953,-3.189],[54.776,-1.576],[53.958,-1.080],[51.126,1.311],
   [50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358],
@@ -1338,7 +1337,7 @@ const ritorno = [
 L.polyline(andata, {color:'#4ea0e6', weight:3, opacity:0.9}).addTo(mapPan);
 L.polyline(ritorno, {color:'#f5a742', weight:3, opacity:0.9, dashArray:'8,6'}).addTo(mapPan);
 
-const cities = [
+var cities = [
   {name:'Milano 🏙️', pos:[45.464,9.190]},
   {name:'Digione 🍷', pos:[47.322,5.041]},
   {name:'Beaune 🏺', pos:[46.978,4.840]},
@@ -1362,7 +1361,7 @@ cities.forEach(c => {
 
 // ===== MAPPE GIORNALIERE =====
 function makeMap(id, center, zoom, waypoints, color) {
-  const m = L.map(id).setView(center, zoom);
+  var m = L.map(id).setView(center, zoom);
   darkTiles().addTo(m);
   if(waypoints && waypoints.length > 1) {
     L.polyline(waypoints, {color: color||'#4ea0e6', weight:4}).addTo(m);
@@ -1538,7 +1537,6 @@ addMarkers(m14, [
 [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14].forEach(function(m) {
     if (m) m.invalidateSize();
   });
-}, 100);
 </script>
 </body>
 </html>
