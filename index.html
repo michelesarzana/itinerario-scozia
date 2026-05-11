@@ -1308,9 +1308,9 @@ function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
 }
 document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeLightbox(); });
-
-window.addEventListener('load', function() {
-  // Dark tile layer factory
+</script>
+<script>
+// Dark tile layer factory
 function darkTiles() {
   return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors',
@@ -1532,7 +1532,13 @@ addMarkers(m14, [
   [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14].forEach(function(m) {
     if (m) m.invalidateSize();
   });
-});
+
+// Force redraw after a tick
+setTimeout(function() {
+  [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14].forEach(function(m) {
+    if (m) m.invalidateSize();
+  });
+}, 300);
 </script>
 </body>
 </html>
