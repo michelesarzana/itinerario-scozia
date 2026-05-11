@@ -1558,13 +1558,6 @@ footer strong { color: var(--gold); }
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // Wait for full DOM + styles to load
-window.addEventListener('load', function() {
-  // Small delay to ensure layout is computed
-  setTimeout(initAllMaps, 100);
-});
-
-function initAllMaps() {
-
 function toggleNav() {
   document.getElementById('navLinks').classList.toggle('open');
 }
@@ -1634,26 +1627,23 @@ function colorPin(color) {
   });
 }
 
-async function makeMap(id, center, zoom, waypoints, color) {
+function makeMap(id, center, zoom, waypoints, color) {
   const m = L.map(id).setView(center, zoom);
   darkTiles().addTo(m);
   if(waypoints && waypoints.length > 1) {
-    let drawn = false;
-    try {
-      const coords = waypoints.map(p => p[1]+','+p[0]).join(';');
-      const url = 'https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson';
-      const resp = await fetch(url);
-      const data = await resp.json();
+    // Mostra subito polyline diretta come fallback
+    const fallback = L.polyline(waypoints, {color: color||'#4ea0e6', weight:4, opacity:0.6, dashArray:'6,4'}).addTo(m);
+    m.fitBounds(fallback.getBounds(), {padding:[50,50], maxZoom:13});
+    // Poi prova OSRM in background
+    const coords = waypoints.map(p => p[1]+','+p[0]).join(';');
+    const url = 'https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson';
+    fetch(url).then(r=>r.json()).then(data=>{
       if(data.routes && data.routes[0]) {
+        fallback.remove();
         const poly = L.geoJSON(data.routes[0].geometry, {style:{color: color||'#4ea0e6', weight:4}}).addTo(m);
         m.fitBounds(poly.getBounds(), {padding:[50,50], maxZoom:13});
-        drawn = true;
       }
-    } catch(e) {}
-    if(!drawn) {
-      const poly = L.polyline(waypoints, {color: color||'#4ea0e6', weight:4}).addTo(m);
-      m.fitBounds(poly.getBounds(), {padding:[50,50], maxZoom:13});
-    }
+    }).catch(()=>{});
   }
   return m;
 }
@@ -1675,6 +1665,8 @@ function addUnconventionalMarkers(m, points) {
   });
 }
 
+window.addEventListener('load', function() {
+  setTimeout(function() {
 // Giorno 1: Milano → Digione
 var m1 = makeMap('map-g1', [46.5, 7.5], 7,
   [[45.464,9.190],[45.076,6.703],[46.000,6.500],[47.322,5.041]],'#4ea0e6');
@@ -1815,13 +1807,13 @@ addMarkers(m14, [
 
 
   // Force all maps to recalculate size
-  var allMaps = [mapPan, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
+  var allMaps = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14];
   allMaps.forEach(function(m) {
-    if (m) {
-      m.invalidateSize();
-    }
+    if (m) { m.invalidateSize(); }
   });
-}
+
+  }, 150);
+});
 </script>
 
 <button class="pdf-btn" onclick="printPage()">
