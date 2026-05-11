@@ -40,6 +40,14 @@
   --nav-bg: rgba(244,246,249,0.97);
   --hr-color: rgba(26,110,181,0.18);
 }
+[data-theme="light"] .overview-section { background: rgba(210,225,245,0.55); }
+[data-theme="light"] .budget-section { background: rgba(210,225,245,0.45); }
+[data-theme="light"] .budget-row.even { background: rgba(26,110,181,0.07); }
+[data-theme="light"] .budget-row.header { background: rgba(26,110,181,0.18); }
+[data-theme="light"] .budget-row:not(.header) { background: rgba(255,255,255,0.7); }
+[data-theme="light"] .budget-row:not(.header):nth-child(even) { background: rgba(210,225,245,0.6); }
+[data-theme="light"] .budget-row.total-row { background: rgba(201,146,10,0.12); border-color: rgba(201,146,10,0.35); }
+[data-theme="light"] .day-card { border-color: rgba(26,110,181,0.25); }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; }
 
@@ -1811,7 +1819,7 @@ var m2 = makeMap('map-g2', [48.2, 4.5], 7,
 addMarkers(m2, [
   {pos:[47.322,5.041], name:'Digione', desc:'Partenza'},
   {pos:[46.978,4.840], name:'Beaune', desc:'Hospices de Beaune 🏺'},
-  {pos:[49.258,4.032], name:'Reims', desc:'Cattedrale UNESCO 🍾 • SC Saint-Quentin', pinColor:'#22c55e'},
+  {pos:[49.283,4.032], name:'Reims', desc:'Cattedrale UNESCO 🍾 • SC Saint-Quentin', pinColor:'#22c55e'},
 
   {pos:[46.978,4.84], name:'Hospices de Beaune', desc:'Capolavoro gotico-fiammingo', pinColor:'#f5a742'},
   {pos:[49.258,4.032], name:'Cattedrale di Reims', desc:'UNESCO — incoronazioni dei re di Francia', pinColor:'#f5a742'},
@@ -1824,7 +1832,7 @@ var m3 = makeMap('map-g3', [51.5, 0.5], 7,
   [[49.258,4.032],[50.949,1.858],[51.082,1.169],[52.500,-1.800],[53.764,-2.699]],'#4ea0e6');
 addMarkers(m3, [
   {pos:[49.258,4.032], name:'Reims', desc:'Partenza'},
-  {pos:[50.949,1.858], name:'Calais', desc:'Eurotunnel + Supercharger 🔋', pinColor:'#22c55e'},
+  {pos:[50.974,1.858], name:'Calais', desc:'Eurotunnel + Supercharger 🔋', pinColor:'#22c55e'},
   {pos:[51.127,1.311], name:'Dover', desc:'White Cliffs 🌊'},
   {pos:[51.082,1.169], name:'Folkestone', desc:'Arrivo Eurotunnel 🚂'},
   {pos:[53.764,-2.699], name:'Preston', desc:'Hotel notturno 🏨'},
@@ -1882,7 +1890,7 @@ addMarkers(m6, [
   {pos:[56.383,-4.618], name:'Loch Lomond', desc:'Primo loch scozzese del viaggio', pinColor:'#f5a742'},
   {pos:[56.82,-5.105], name:'Eilean Donan Castle', desc:'Il castello più fotografato di Scozia', pinColor:'#f5a742'},
   {pos:[57.143,-5.509], name:'Isle of Skye', desc:'Arrivo sull\'isola', pinColor:'#f5a742'},
-  {pos:[57.477,-4.225], name:'Tesla SC Inverness', desc:'Supercharger 🔋', pinColor:'#22c55e'}
+  {pos:[56.819,-5.105], name:'Tesla SC Fort William', desc:'Supercharger 🔋', pinColor:'#22c55e'}
 ,
 ]);
 
@@ -1998,7 +2006,7 @@ var m13 = makeMap('map-g13', [49.5, 5.0], 7,
   [[50.949,1.858],[49.258,4.032],[48.574,7.752],[48.077,7.358]],'#4ea0e6');
 addMarkers(m13, [
   {pos:[50.949,1.858], name:'Calais', desc:'Partenza'},
-  {pos:[49.258,4.032], name:'Reims', desc:'Supercharger 🔋', pinColor:'#22c55e'},
+  {pos:[49.283,4.032], name:'Reims', desc:'Supercharger 🔋', pinColor:'#22c55e'},
   {pos:[48.574,7.752], name:'Strasburgo', desc:'Petite France UNESCO 🥨'},
   {pos:[48.077,7.358], name:'Colmar', desc:'Alsazia da cartolina 🍷'},
 
