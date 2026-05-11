@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Milano → Glasgow → Milano | Itinerario 14 Giorni</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & BASE ===== */
@@ -208,7 +207,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-ser
 footer { text-align: center; padding: 40px 16px; font-size: 13px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.07); }
 footer strong { color: var(--gold); }
 </style>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -248,7 +246,7 @@ footer strong { color: var(--gold); }
 </section>
 <div class="section-map" id="mappa">
   <h2>🗺️ Il Percorso Completo</h2>
-  <div id="mappa-panoramica" style="height:500px;border-radius:16px;border:1px solid rgba(78,160,230,0.3);"></div>
+  <iframe id="mappa-panoramica" src="https://www.openstreetmap.org/export/embed.html?bbox=-7.0,45.0,10.0,58.0&layer=mapnik" style="width:100%;height:500px;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--muted);">
     <span>━━ <span style="color:#4ea0e6">Andata</span></span>
     <span style="letter-spacing:2px">- - -</span> <span style="color:#f5a742">Ritorno</span>
@@ -287,7 +285,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~4.5h guida</span>
     </div>
   </div>
-  <div id="map-g1" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g1" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=6.5,45.0,9.5,46.0&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_001.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Palazzo dei Duchi di Borgogna, Digione">
@@ -352,7 +350,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3.5h guida + deviazione Beaune</span>
     </div>
   </div>
-  <div id="map-g2" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g2" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=4.5,46.5,9.5,47.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_003.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Hospices de Beaune - tetti colorati">
@@ -416,7 +414,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5.5h guida + 35min Eurotunnel</span>
     </div>
   </div>
-  <div id="map-g3" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g3" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=0.5,49.0,5.5,51.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_005.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover">
@@ -475,7 +473,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3h guida</span>
     </div>
   </div>
-  <div id="map-g4" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g4" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-4.5,53.5,2.5,56.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_007.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Glasgow Cathedral">
@@ -540,7 +538,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3h guida (con soste)</span>
     </div>
   </div>
-  <div id="map-g5" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g5" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-5.5,55.5,-3.5,57.0&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_002.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Loch Lomond dall'alto">
@@ -599,7 +597,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~2.5h guida</span>
     </div>
   </div>
-  <div id="map-g6" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g6" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-6.0,56.5,-4.5,57.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_010.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Eilean Donan Castle">
@@ -662,7 +660,7 @@ footer strong { color: var(--gold); }
       <span>🕐 Giornata piena di trekking</span>
     </div>
   </div>
-  <div id="map-g7" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g7" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-6.5,57.0,-5.0,57.8&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_011.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Fairy Pools - cascate Skye">
@@ -736,7 +734,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~2.5h guida</span>
     </div>
   </div>
-  <div id="map-g8" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g8" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-6.5,57.0,-4.0,57.8&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_013.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Inverness Castle - arenaria rossa">
@@ -799,7 +797,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3h guida (con soste)</span>
     </div>
   </div>
-  <div id="map-g9" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g9" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-5.0,57.0,-3.5,57.8&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_014.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Castello di Urquhart - Loch Ness">
@@ -862,7 +860,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~1.5h guida</span>
     </div>
   </div>
-  <div id="map-g10" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g10" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-4.5,55.5,-2.5,57.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_015.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Arthur's Seat - Edimburgo">
@@ -937,7 +935,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~3.5h guida (con soste)</span>
     </div>
   </div>
-  <div id="map-g11" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g11" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-3.5,55.5,-2.0,56.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_016.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Durham Cathedral - River Wear">
@@ -1011,7 +1009,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5h guida + 90min traghetto</span>
     </div>
   </div>
-  <div id="map-g12" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g12" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=-2.0,51.0,1.5,54.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_006.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="White Cliffs of Dover - vista panoramica">
@@ -1070,7 +1068,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5h guida</span>
     </div>
   </div>
-  <div id="map-g13" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g13" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=1.5,48.0,8.0,51.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_020.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Strasburgo - Petite France canale">
@@ -1133,7 +1131,7 @@ footer strong { color: var(--gold); }
       <span>🕐 ~5h guida (con pausa)</span>
     </div>
   </div>
-  <div id="map-g14" class="day-map" style="height:350px;min-height:350px;"></div>
+  <iframe id="map-g14" class="day-map" src="https://www.openstreetmap.org/export/embed.html?bbox=7.0,45.5,9.5,48.5&layer=mapnik" style="height:350px;min-height:350px;width:100%;border:0;border-radius:8px;" loading="lazy" allowfullscreen></iframe>
   <div class="gallery-label">📸 Galleria Foto</div>
   <div class="photo-gallery">
     <img src="https://raw.githubusercontent.com/michelesarzana/itinerario-scozia/main/imgs/photo_021.jpeg" class="gallery-photo" onclick="openLightbox(this)" alt="Lago di Como - villaggio alpino">
